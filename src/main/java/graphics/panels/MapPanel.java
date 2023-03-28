@@ -56,10 +56,20 @@ public class MapPanel extends JComponent {
             for (int y = 0; y < map[i].length; y++) {
                 Rectangle2D rectangle = new Rectangle2D.Double(y * size, i * size, size, size);
                 Cell cell = map[i][y];
-                if (cell.isActive())
+                System.out.println("i = " + i + ", y = " + y);
+                if (cell.isActive()) {
                     g2.setColor(Color.WHITE);
-                else
+                    if (cell.isPlayerOneHere()) {
+                        g2.setColor(Color.BLUE);
+                        System.out.println("Player ONE");
+                    } else if (cell.isPlayerTwoHere()) {
+                        g2.setColor(Color.GREEN);
+                        System.out.println("Player TWO");
+                    }
+                } else {
                     g2.setColor(Color.YELLOW);
+                }
+
                 g2.fill(rectangle);
 
                 rectangle = new Rectangle2D.Double((y * size) + half, i * size, 1, size);

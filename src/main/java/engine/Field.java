@@ -2,25 +2,34 @@ package engine;
 
 public class Field {
     private final Cell[][] cells;
+    private final Cell cellStartPlayerOne;
+    private final Cell cellStartPlayerTwo;
 
-    private Field(Cell[][] cells) {
+    private Cell cellPlayerOne;
+    private Cell cellPlayerTwo;
+
+    private Field(Cell[][] cells, Cell cellStartPlayerOne, Cell cellStartPlayerTwo) {
         this.cells = cells;
+        this.cellStartPlayerOne = cellStartPlayerOne;
+        this.cellStartPlayerTwo = cellStartPlayerTwo;
+        cellStartPlayerOne.setPlayerOneHere(true);
+        cellStartPlayerTwo.setPlayerTwoHere(true);
     }
 
 
     public static Field getField() {
-        return new Field(getRandomField());
+        return getRandomField();
     }
 
     /**
      * генерирует случайное поле
      * @return сгенерируемое случайное поле
      */
-    private static Cell[][] getRandomField() {
+    private static Field getRandomField() {
         return getTestField();
     }
 
-    private static Cell[][] getTestField() {
+    private static Field getTestField() {
         Cell[][] cells = new Cell[initField.length][initField[0].length];
 
         for (int i = 0; i < cells.length; i++) {
@@ -31,7 +40,7 @@ public class Field {
                     cells[i][y] = new Cell(false);
             }
         }
-        return cells;
+        return new Field(cells, cells[39][4], cells[39][6]);
     }
 
     private static byte[][] initField = {
@@ -79,5 +88,29 @@ public class Field {
 
     public Cell[][] getCells() {
         return cells;
+    }
+
+    public Cell getCellStartPlayerOne() {
+        return cellStartPlayerOne;
+    }
+
+    public Cell getCellStartPlayerTwo() {
+        return cellStartPlayerTwo;
+    }
+
+    public Cell getCellPlayerOne() {
+        return cellPlayerOne;
+    }
+
+    public void setCellPlayerOne(Cell cellPlayerOne) {
+        this.cellPlayerOne = cellPlayerOne;
+    }
+
+    public Cell getCellPlayerTwo() {
+        return cellPlayerTwo;
+    }
+
+    public void setCellPlayerTwo(Cell cellPlayerTwo) {
+        this.cellPlayerTwo = cellPlayerTwo;
     }
 }

@@ -9,8 +9,8 @@ import java.awt.event.ActionListener;
 
 public class StartFrame extends JFrame {
 
-    public static final int DEFAULT_WIDTH = 500;
-    public static final int DEFAULT_HEIGHT = 500;
+    public static final int DEFAULT_WIDTH = 800;
+    public static final int DEFAULT_HEIGHT = 800;
 
     public StartFrame(Game game) {
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
