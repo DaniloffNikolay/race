@@ -2,13 +2,12 @@ package graphics;
 
 import engine.Field;
 import engine.Game;
+import engine.Step;
 import graphics.panels.MapPanel;
-import graphics.panels.SouthPanel;
+import graphics.panels.ControlPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GameFrame extends JDialog {
 
@@ -47,11 +46,10 @@ public class GameFrame extends JDialog {
         add(statusPanel, BorderLayout.NORTH);
 
 
-        controlPanel = new SouthPanel(game);
+        controlPanel = new ControlPanel(this, game);
         controlPanel.setBackground(Color.GREEN);
         add(controlPanel, BorderLayout.SOUTH);
     }
-
 
     public void update() {
         mapPanel.repaint();

@@ -19,21 +19,15 @@ public class StartFrame extends JFrame {
         final Dimension screenSize = kit.getScreenSize();
         setLocation(screenSize.width / 2 - DEFAULT_WIDTH / 2, screenSize.height / 2 - DEFAULT_HEIGHT / 2);
 
-//        URL url = getClass().getResource("images/armlogo.png");
-//        setIconImage(new ImageIcon(url).getImage());
-
         setLayout(new BorderLayout());
 
         JPanel centerPanel = new JPanel();
         JButton newGame = new JButton("пуск");
-        newGame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GameFrame gameFrame = new GameFrame(game);
-                game.start();
-                gameFrame.setVisible(true);
+        newGame.addActionListener(e -> {
+            GameFrame gameFrame = new GameFrame(game);
+            game.start();
+            gameFrame.setVisible(true);
 
-            }
         });
 
         centerPanel.add(newGame);
