@@ -66,13 +66,13 @@ public class MapPanel extends JComponent {
                         System.out.println("Player TWO");
                     }
                 } else {
-                    g2.setColor(Color.YELLOW);
+                    g2.setColor(new Color(0x1fb639));
                 }
 
                 g2.fill(rectangle);
 
                 rectangle = new Rectangle2D.Double((y * size) + half, i * size, 1, size);
-                g2.setColor(Color.BLUE);
+                g2.setColor(new Color(0xbcbcbc));
                 g2.fill(rectangle);
 
                 rectangle = new Rectangle2D.Double(y * size, (i * size) + half, size, 1);

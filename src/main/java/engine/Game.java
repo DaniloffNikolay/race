@@ -8,15 +8,20 @@ public class Game {
     private Player isNext;
 
     private long timeStart;
+    private long timeEnd;
 
     public Game(Field field) {
         this.field = field;
         playerOne = new Player(field.getCellStartPlayerOne(), "Player one");
         playerTwo = new Player(field.getCellStartPlayerTwo(), "Player two");
+        isNext = playerOne;
     }
 
     public void start() {
         timeStart = System.currentTimeMillis();
+    }
+    private void endGame() {
+        timeEnd = System.currentTimeMillis();
     }
 
     public void action(Step step) {
