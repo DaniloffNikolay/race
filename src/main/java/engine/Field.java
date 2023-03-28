@@ -16,15 +16,25 @@ public class Field {
         cellStartPlayerTwo.setPlayerTwoHere(true);
     }
 
-    public boolean movePlayerOne(Player player, byte direction, byte speed) {
+    public void movePlayerOne(Player player, byte direction, byte speed) {
         System.out.println("player one " + player + " has direction = " + direction + ", speed = " + speed);
+    }
+
+    public void movePlayerTwo(Player player, byte direction, byte speed) {
+        System.out.println("player two " + player + " has direction = " + direction + ", speed = " + speed);
+    }
+
+    /**
+     * Метод передвижения
+     * @param startCell ячейка от куда старт
+     * @param nextCell ячейка направления
+     * @param speed количество ячеек которые нужно пройти
+     * @return врезался ли в огорождение или нет
+     */
+    private boolean move(Cell startCell, Cell nextCell, byte speed) {
         return false;
     }
 
-    public boolean movePlayerTwo(Player player, byte direction, byte speed) {
-        System.out.println("player two " + player + " has direction = " + direction + ", speed = " + speed);
-        return false;
-    }
 
     public static Field getField() {
         return getRandomField();
