@@ -3,6 +3,7 @@ package graphics;
 import engine.Field;
 import engine.Game;
 import graphics.panels.MapPanel;
+import graphics.panels.SouthPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ public class GameFrame extends JDialog {
 
     private MapPanel mapPanel;
     private JComponent statusPanel;
-    private JComponent controlPanel;
+    private JPanel controlPanel;
 
 
 
@@ -45,7 +46,8 @@ public class GameFrame extends JDialog {
         statusPanel.setBackground(Color.RED);
         add(statusPanel, BorderLayout.NORTH);
 
-        controlPanel = new JPanel();
+
+        controlPanel = new SouthPanel(game);
         controlPanel.setBackground(Color.GREEN);
         add(controlPanel, BorderLayout.SOUTH);
     }
