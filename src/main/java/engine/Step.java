@@ -23,7 +23,7 @@ public class Step {
         return player;
     }
 
-    public int getDirection() {
+    public byte getDirection() {
         return direction;
     }
 

@@ -16,6 +16,15 @@ public class Field {
         cellStartPlayerTwo.setPlayerTwoHere(true);
     }
 
+    public boolean movePlayerOne(Player player, byte direction, byte speed) {
+        System.out.println("player one " + player + " has direction = " + direction + ", speed = " + speed);
+        return false;
+    }
+
+    public boolean movePlayerTwo(Player player, byte direction, byte speed) {
+        System.out.println("player two " + player + " has direction = " + direction + ", speed = " + speed);
+        return false;
+    }
 
     public static Field getField() {
         return getRandomField();

@@ -8,7 +8,7 @@ public class Game {
     private Player isNext;
 
     private long timeStart;
-    private long timeEnd;
+    private long totalTime;
 
     public Game(Field field) {
         this.field = field;
@@ -21,14 +21,18 @@ public class Game {
         timeStart = System.currentTimeMillis();
     }
     private void endGame() {
-        timeEnd = System.currentTimeMillis();
+        long timeEnd = System.currentTimeMillis();
+        totalTime = timeEnd - timeStart;
     }
 
     public void action(Step step) {
-        System.out.println("Player = " + step.getPlayer());
-        System.out.println("Direction = " + step.getDirection());
-        System.out.println("Boost = " + step.isBoost());
-        System.out.println("Brake = " + step.isBrake());
+        Player player = step.getPlayer();
+        player.setSpeed(step.isBoost(), step.isBrake());
+        if (playerOne == player) {
+            field.movePlayerOne(player, step.getDirection(), player.getSpeed());
+        } else if (playerTwo == player) {
+            field.movePlayerTwo(player, step.getDirection(), player.getSpeed());
+        }
     }
 
     public Player whoIsNext() {
