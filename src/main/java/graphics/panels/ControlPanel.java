@@ -65,7 +65,7 @@ public class ControlPanel extends JPanel {
         run.addActionListener(a -> {
             if (direction != 0) {
                 Step step = new Step(player, direction, isBoost, isBrake);
-                game.action(step);
+                gameFrame.action(step);
                 player = game.whoIsNext();
             } else {
                 System.out.println("нужно выбрать направление");

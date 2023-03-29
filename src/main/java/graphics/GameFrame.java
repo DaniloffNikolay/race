@@ -51,6 +51,11 @@ public class GameFrame extends JDialog {
         add(controlPanel, BorderLayout.SOUTH);
     }
 
+    public void action(Step step) {
+        game.action(step);
+        mapPanel.repaint();
+    }
+
     public void update() {
         mapPanel.repaint();
     }

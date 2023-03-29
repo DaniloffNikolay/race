@@ -18,25 +18,103 @@ public class Field {
         cellPlayerTwo = cellStartPlayerTwo;
     }
 
-    public void movePlayerOne(Player player, byte direction, byte speed) {
-        System.out.println("player one " + player + " has direction = " + direction + ", speed = " + speed);
-        System.out.println("this player here = " + cellPlayerOne.getX() + ", " + cellPlayerOne.getY());
+    public boolean movePlayerOne(Player player, byte direction, byte speed) {
+        if (speed == 0)
+            return true;
+
+        Cell directionCell = getCellDirection(cellPlayerOne, direction);
+        if (!directionCell.isActive()) {
+            return false;
+        } else {
+            cellPlayerOne.setPlayerOneHere(false);
+            cellPlayerOne = directionCell;
+            cellPlayerOne.setPlayerOneHere(true);
+            speed--;
+        }
+
+        return movePlayerOne(player, direction, speed);
     }
 
-    public void movePlayerTwo(Player player, byte direction, byte speed) {
-        System.out.println("player two " + player + " has direction = " + direction + ", speed = " + speed);
-        System.out.println("this player here = " + cellPlayerTwo.getX() + ", " + cellPlayerTwo.getY());
+    public boolean movePlayerTwo(Player player, byte direction, byte speed) {
+        if (speed == 0)
+            return true;
+
+        Cell directionCell = getCellDirection(cellPlayerTwo, direction);
+        if (!directionCell.isActive()) {
+            return false;
+        } else {
+            cellPlayerTwo.setPlayerTwoHere(false);
+            cellPlayerTwo = directionCell;
+            cellPlayerTwo.setPlayerTwoHere(true);
+            speed--;
+        }
+
+        return movePlayerTwo(player, direction, speed);
+    }
+
+    /**
+     * метод определяет ячейку направления
+     * @param cellStart ячейка где стоит игрок
+     * @param direction направление  1 2 3
+                                     4 * 5
+                                     6 7 8
+     * @return ячейку направления
+     */
+    private Cell getCellDirection(Cell cellStart, byte direction) {
+        int x = cellStart.getX();
+        int y = cellStart.getY();
+
+        switch (direction) {
+            case 1 -> { //top left
+                x = x - 1;
+                y = y - 1;
+            }
+            case 2 -> { //top
+                y = y - 1;
+            }
+            case 3 -> { //top right
+                x = x + 1;
+                y = y - 1;
+            }
+            case 4 -> { //left
+                x = x - 1;
+            }
+            case 5 -> { //right
+                x = x + 1;
+            }
+            case 6 -> { //down left
+                x = x - 1;
+                y = y + 1;
+            }
+            case 7 -> { //down
+                y = y + 1;
+            }
+            case 8 -> { //down right
+                x = x + 1;
+                y = y + 1;
+            }
+        }
+
+        return cells[y][x];
     }
 
     /**
      * Метод передвижения
      * @param startCell ячейка от куда старт
-     * @param nextCell ячейка направления
+     * @param direction направление
      * @param speed количество ячеек которые нужно пройти
      * @return врезался ли в огорождение или нет
      */
-    private boolean move(Cell startCell, Cell nextCell, byte speed) {
-        return false;
+    private boolean move(Cell startCell, byte direction, byte speed) {
+        if (speed == 0)
+            return true;
+
+        Cell directionCell = getCellDirection(startCell, direction);
+        if (!directionCell.isActive()) {
+            return false;
+        }
+
+        return move(directionCell, direction, speed--);
     }
 
 
@@ -63,7 +141,7 @@ public class Field {
                     cells[i][y] = new Cell(y, i, false);
             }
         }
-        return new Field(cells, cells[39][4], cells[39][6]);
+        return new Field(cells, cells[38][4], cells[38][6]);
     }
 
     private static byte[][] initField = {

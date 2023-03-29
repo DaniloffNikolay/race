@@ -20,30 +20,6 @@ public class MapPanel extends JComponent {
     public MapPanel(Field field, GameFrame gameFrame) {
         this.field = field;
         this.gameFrame = gameFrame;
-        addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) { //только клик
-                //System.out.println(e.getX() + " " + e.getY());
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) { //каждое нажатие
-                //System.out.println(e.getX() / 5 + " " + e.getY() / 5);
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {   //каждое отжатие
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {        //каждое появление мышки на панели
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {         //каждый выход мышки за панель
-                //System.out.println(e.getX() + " " + e.getY());
-            }
-        });
     }
 
     @Override
