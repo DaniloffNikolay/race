@@ -1,6 +1,7 @@
 engine\Field.class
 graphics\panels\NorthPanel.class
 graphics\StartFrame.class
+graphics\InstructionFrame.class
 engine\Cell.class
 graphics\GameFrame.class
 Main$1.class
@@ -8,6 +9,7 @@ graphics\panels\ControlPanel.class
 graphics\panels\ControlPanel$2.class
 Main.class
 graphics\panels\ControlPanel$1.class
+engine\Player$Direction.class
 engine\Player.class
 engine\Step.class
 engine\Game.class

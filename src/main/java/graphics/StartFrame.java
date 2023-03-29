@@ -4,8 +4,6 @@ import engine.Game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class StartFrame extends JFrame {
 
@@ -30,7 +28,15 @@ public class StartFrame extends JFrame {
 
         });
 
+        JButton instruction = new JButton("инструкция");
+        instruction.addActionListener(e -> {
+            InstructionFrame instructionFrame = new InstructionFrame();
+            instructionFrame.setVisible(true);
+
+        });
+
         centerPanel.add(newGame);
+        centerPanel.add(instruction);
         add(centerPanel, BorderLayout.CENTER);
     }
 

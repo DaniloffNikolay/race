@@ -21,6 +21,15 @@ public class ControlPanel extends JPanel {
     private boolean isBrake;
     private JButton buttonDirectionPressed;
 
+    private JButton topLeft;
+    private JButton top;
+    private JButton topRight;
+    private JButton left;
+    private JButton right;
+    private JButton downLeft;
+    private JButton down;
+    private JButton downRight;
+
     private JButton brake;
     private JButton boost;
     private JButton buttonMovePressed;
@@ -38,58 +47,31 @@ public class ControlPanel extends JPanel {
 
     private void initialization() {
         player = game.whoIsNext();
-        Player.Direction playerDirection = player.getDirection();
 
-        GridLayout layout = new GridLayout(4, 2, 3, 3);
-        setLayout(layout);
+        topLeft = new JButton("top-left");
+        topLeft.addActionListener(getActionListenerForDirection((byte) 1, topLeft));
 
-        if (playerDirection.isTopLeft()) {
-            JButton topLeft = new JButton("top-left");
-            topLeft.addActionListener(getActionListenerForDirection((byte) 1, topLeft));
-            add(topLeft);
-        }
+        top = new JButton("top");
+        top.addActionListener(getActionListenerForDirection((byte) 2, top));
 
-        if (playerDirection.isTop()) {
-            JButton top = new JButton("top");
-            top.addActionListener(getActionListenerForDirection((byte) 2, top));
-            add(top);
-        }
+        topRight = new JButton("top-right");
+        topRight.addActionListener(getActionListenerForDirection((byte) 3, topRight));
 
-        if (playerDirection.isTopRight()) {
-            JButton topRight = new JButton("top-right");
-            topRight.addActionListener(getActionListenerForDirection((byte) 3, topRight));
-            add(topRight);
-        }
+        left = new JButton("left");
+        left.addActionListener(getActionListenerForDirection((byte) 4, left));
 
-        if (playerDirection.isLeft()) {
-            JButton left = new JButton("left");
-            left.addActionListener(getActionListenerForDirection((byte) 4, left));
-            add(left);
-        }
+        right = new JButton("right");
+        right.addActionListener(getActionListenerForDirection((byte) 5, right));
 
-        if (playerDirection.isRight()) {
-            JButton right = new JButton("right");
-            right.addActionListener(getActionListenerForDirection((byte) 5, right));
-            add(right);
-        }
+        downLeft = new JButton("down-left");
+        downLeft.addActionListener(getActionListenerForDirection((byte) 6, downLeft));
 
-        if (playerDirection.isDownLeft()) {
-            JButton downLeft = new JButton("down-left");
-            downLeft.addActionListener(getActionListenerForDirection((byte) 6, downLeft));
-            add(downLeft);
-        }
+        down = new JButton("down");
+        down.addActionListener(getActionListenerForDirection((byte) 7, down));
 
-        if (playerDirection.isDown()) {
-            JButton down = new JButton("down");
-            down.addActionListener(getActionListenerForDirection((byte) 7, down));
-            add(down);
-        }
+        downRight = new JButton("down-right");
+        downRight.addActionListener(getActionListenerForDirection((byte) 8, downRight));
 
-        if (playerDirection.isDownRight()) {
-            JButton downRight = new JButton("down-right");
-            downRight.addActionListener(getActionListenerForDirection((byte) 8, downRight));
-            add(downRight);
-        }
 
         JButton center = new JButton();
         center.setEnabled(false);
@@ -101,6 +83,7 @@ public class ControlPanel extends JPanel {
                 Step step = new Step(player, direction, isBoost, isBrake);
                 gameFrame.action(step);
                 player = game.whoIsNext();
+                setActiveButton(player.getDirection());
             } else {
                 System.out.println("нужно выбрать направление");
             }
@@ -110,10 +93,26 @@ public class ControlPanel extends JPanel {
         boost = new JButton("BOOST");
         boost.addActionListener(getActionListenerForMove(boost, 2));
 
-        //add(center);
+        GridLayout layout = new GridLayout(4, 2, 3, 3);
+        setLayout(layout);
+
+        add(topLeft);
+        add(top);
+        add(topRight);
+
+        add(left);
+        add(center);
+        add(right);
+
+        add(downLeft);
+        add(down);
+        add(downRight);
+
         add(run);
         add(brake);
         add(boost);
+
+        setActiveButton(player.getDirection());
     }
 
     private void setButtonDirectionPressed(JButton button) {
@@ -182,5 +181,16 @@ public class ControlPanel extends JPanel {
                 isBrake = false;
             }
         }
+    }
+
+    private void setActiveButton(Player.Direction directions) {
+        topLeft.setEnabled(directions.isTopLeft());
+        top.setEnabled(directions.isTop());
+        topRight.setEnabled(directions.isTopRight());
+        left.setEnabled(directions.isLeft());
+        right.setEnabled(directions.isRight());
+        downLeft.setEnabled(directions.isDownLeft());
+        down.setEnabled(directions.isDown());
+        downRight.setEnabled(directions.isDownRight());
     }
 }

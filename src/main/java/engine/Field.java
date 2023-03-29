@@ -29,6 +29,7 @@ public class Field {
         Cell directionCell = getCellDirection(cellPlayerOne, direction);
         if (!directionCell.isActive()) {//врезался
             player.setSpeedAfterCrash();
+            player.setAllPossibleDirections((byte) 0);
             return false;
         } else {
             cellPlayerOne.setPlayerOneHere(false);
@@ -46,10 +47,10 @@ public class Field {
             return true;
         }
 
-
         Cell directionCell = getCellDirection(cellPlayerTwo, direction);
         if (!directionCell.isActive()) {//врезался
             player.setSpeedAfterCrash();
+            player.setAllPossibleDirections((byte) 0);
             return false;
         } else {
             cellPlayerTwo.setPlayerTwoHere(false);

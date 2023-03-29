@@ -48,6 +48,16 @@ public class Player {
             direction = new Direction();
         setAllDirectionFalse();
         switch (lastDirection) {
+            case 0 -> {
+                direction.topLeft = true;
+                direction.top = true;
+                direction.topRight = true;
+                direction.left = true;
+                direction.right = true;
+                direction.downLeft = true;
+                direction.down = true;
+                direction.downRight = true;
+            }
             case 1 -> {
                 direction.left = true;
                 direction.topLeft = true;
