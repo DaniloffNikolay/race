@@ -1,5 +1,3 @@
-
-
 import engine.Field;
 import engine.Game;
 import graphics.StartFrame;
@@ -21,8 +19,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main start = new Main();
+        Main main = new Main();
         Game game = new Game(Field.getField());
-        start.startApplication(game);
+        main.startApplication(game);
     }
 }
