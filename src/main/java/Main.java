@@ -19,9 +19,10 @@ public class Main {
             }
         });
     }
+
     public static void main(String[] args) {
-        Game game = new Game(Field.getField());
         Main start = new Main();
+        Game game = new Game(Field.getField());
         start.startApplication(game);
     }
 }

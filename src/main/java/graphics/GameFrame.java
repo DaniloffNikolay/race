@@ -47,7 +47,7 @@ public class GameFrame extends JDialog {
 
 
         controlPanel = new ControlPanel(this, game);
-        controlPanel.setBackground(Color.GREEN);
+//        controlPanel.setBackground(Color.GREEN);
         add(controlPanel, BorderLayout.SOUTH);
     }
 

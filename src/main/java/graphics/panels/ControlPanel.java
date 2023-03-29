@@ -31,6 +31,8 @@ public class ControlPanel extends JPanel {
     public ControlPanel(GameFrame gameFrame, Game game) {
         this.gameFrame = gameFrame;
         this.game =game;
+        setBackground(new Color(0x544F4F));
+
         initialization();
     }
 

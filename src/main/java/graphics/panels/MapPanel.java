@@ -60,10 +60,8 @@ public class MapPanel extends JComponent {
                     g2.setColor(Color.WHITE);
                     if (cell.isPlayerOneHere()) {
                         g2.setColor(Color.BLUE);
-                        System.out.println("Player ONE");
                     } else if (cell.isPlayerTwoHere()) {
                         g2.setColor(Color.GREEN);
-                        System.out.println("Player TWO");
                     }
                 } else {
                     g2.setColor(new Color(0x1fb639));

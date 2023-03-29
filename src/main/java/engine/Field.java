@@ -14,14 +14,18 @@ public class Field {
         this.cellStartPlayerTwo = cellStartPlayerTwo;
         cellStartPlayerOne.setPlayerOneHere(true);
         cellStartPlayerTwo.setPlayerTwoHere(true);
+        cellPlayerOne = cellStartPlayerOne;
+        cellPlayerTwo = cellStartPlayerTwo;
     }
 
     public void movePlayerOne(Player player, byte direction, byte speed) {
         System.out.println("player one " + player + " has direction = " + direction + ", speed = " + speed);
+        System.out.println("this player here = " + cellPlayerOne.getX() + ", " + cellPlayerOne.getY());
     }
 
     public void movePlayerTwo(Player player, byte direction, byte speed) {
         System.out.println("player two " + player + " has direction = " + direction + ", speed = " + speed);
+        System.out.println("this player here = " + cellPlayerTwo.getX() + ", " + cellPlayerTwo.getY());
     }
 
     /**
@@ -49,14 +53,14 @@ public class Field {
     }
 
     private static Field getTestField() {
-        Cell[][] cells = new Cell[initField.length][initField[0].length];
+        Cell[][] cells = new Cell[initField[0].length][initField.length];
 
         for (int i = 0; i < cells.length; i++) {
             for (int y = 0; y < cells[i].length; y++) {
                 if(initField[i][y] == 1)
-                    cells[i][y] = new Cell(true);
+                    cells[i][y] = new Cell(y, i, true);
                 else
-                    cells[i][y] = new Cell(false);
+                    cells[i][y] = new Cell(y, i, false);
             }
         }
         return new Field(cells, cells[39][4], cells[39][6]);

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cell {
+    private final int x;
+    private final int y;
 
     private final boolean active;
     private boolean isPlayerOneHere = false;
@@ -11,7 +13,9 @@ public class Cell {
     private boolean isPlayerOneWasHere = false;
     private boolean isPlayerTwoWasHere = false;
 
-    public Cell(boolean active) {
+    public Cell(int x, int y, boolean active) {
+        this.x = x;
+        this.y = y;
         this.active = active;
     }
 
@@ -49,5 +53,13 @@ public class Cell {
 
     public void setPlayerTwoWasHere(boolean playerTwoWasHere) {
         isPlayerTwoWasHere = playerTwoWasHere;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }
