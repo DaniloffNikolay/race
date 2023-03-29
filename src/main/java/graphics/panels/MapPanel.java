@@ -24,8 +24,8 @@ public class MapPanel extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-        int size = 13;
-        int half = 7;
+        int size = 15;
+        int half = 8;
         Graphics2D g2 = (Graphics2D)g;
         Cell[][] map = field.getCells();
         for (int i = 0; i < map.length; i++) {
