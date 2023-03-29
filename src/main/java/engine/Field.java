@@ -7,8 +7,9 @@ public class Field {
 
     private Cell cellPlayerOne;
     private Cell cellPlayerTwo;
+    private byte startDirection;
 
-    private Field(Cell[][] cells, Cell cellStartPlayerOne, Cell cellStartPlayerTwo) {
+    private Field(Cell[][] cells, Cell cellStartPlayerOne, Cell cellStartPlayerTwo, byte startDirection) {
         this.cells = cells;
         this.cellStartPlayerOne = cellStartPlayerOne;
         this.cellStartPlayerTwo = cellStartPlayerTwo;
@@ -16,14 +17,18 @@ public class Field {
         cellStartPlayerTwo.setPlayerTwoHere(true);
         cellPlayerOne = cellStartPlayerOne;
         cellPlayerTwo = cellStartPlayerTwo;
+        this.startDirection = startDirection;
     }
 
     public boolean movePlayerOne(Player player, byte direction, byte speed) {
-        if (speed == 0)
+        if (speed == 0) {
+            player.setAllPossibleDirections(direction);
             return true;
+        }
 
         Cell directionCell = getCellDirection(cellPlayerOne, direction);
-        if (!directionCell.isActive()) {
+        if (!directionCell.isActive()) {//врезался
+            player.setSpeedAfterCrash();
             return false;
         } else {
             cellPlayerOne.setPlayerOneHere(false);
@@ -36,11 +41,15 @@ public class Field {
     }
 
     public boolean movePlayerTwo(Player player, byte direction, byte speed) {
-        if (speed == 0)
+        if (speed == 0) {
+            player.setAllPossibleDirections(direction);
             return true;
+        }
+
 
         Cell directionCell = getCellDirection(cellPlayerTwo, direction);
-        if (!directionCell.isActive()) {
+        if (!directionCell.isActive()) {//врезался
+            player.setSpeedAfterCrash();
             return false;
         } else {
             cellPlayerTwo.setPlayerTwoHere(false);
@@ -98,26 +107,6 @@ public class Field {
         return cells[y][x];
     }
 
-    /**
-     * Метод передвижения
-     * @param startCell ячейка от куда старт
-     * @param direction направление
-     * @param speed количество ячеек которые нужно пройти
-     * @return врезался ли в огорождение или нет
-     */
-    private boolean move(Cell startCell, byte direction, byte speed) {
-        if (speed == 0)
-            return true;
-
-        Cell directionCell = getCellDirection(startCell, direction);
-        if (!directionCell.isActive()) {
-            return false;
-        }
-
-        return move(directionCell, direction, speed--);
-    }
-
-
     public static Field getField() {
         return getRandomField();
     }
@@ -141,7 +130,7 @@ public class Field {
                     cells[i][y] = new Cell(y, i, false);
             }
         }
-        return new Field(cells, cells[38][4], cells[38][6]);
+        return new Field(cells, cells[38][4], cells[38][6], (byte) 2);
     }
 
     private static byte[][] initField = {
@@ -213,5 +202,9 @@ public class Field {
 
     public void setCellPlayerTwo(Cell cellPlayerTwo) {
         this.cellPlayerTwo = cellPlayerTwo;
+    }
+
+    public byte getStartDirection() {
+        return startDirection;
     }
 }

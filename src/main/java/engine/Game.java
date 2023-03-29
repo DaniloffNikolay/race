@@ -14,6 +14,8 @@ public class Game {
         this.field = field;
         playerOne = new Player(field.getCellStartPlayerOne(), "Player one");
         playerTwo = new Player(field.getCellStartPlayerTwo(), "Player two");
+        playerOne.setAllPossibleDirections(field.getStartDirection());
+        playerTwo.setAllPossibleDirections(field.getStartDirection());
         isNext = playerOne;
     }
 

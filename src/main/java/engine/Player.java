@@ -4,6 +4,7 @@ public class Player {
     private Cell playerCell;
     private byte speed = 1;
     private String name;
+    private Direction direction;
 
     public Player(Cell playerCell, String name) {
         this.playerCell = playerCell;
@@ -29,8 +30,123 @@ public class Player {
             speedBrake();
     }
 
+    public void setSpeedAfterCrash() {
+        this.speed = 1;
+    }
+
     public byte getSpeed() {
         return speed;
+    }
+
+    /**
+     * @param lastDirection направление  1 2 3
+     *                                   4 * 5
+     *                                   6 7 8
+     */
+    public void setAllPossibleDirections(byte lastDirection) {
+        if (direction == null)
+            direction = new Direction();
+        setAllDirectionFalse();
+        switch (lastDirection) {
+            case 1 -> {
+                direction.left = true;
+                direction.topLeft = true;
+                direction.top = true;
+            }
+            case 2 -> {
+                direction.topLeft = true;
+                direction.top = true;
+                direction.topRight = true;
+            }
+            case 3 -> {
+                direction.top = true;
+                direction.topRight = true;
+                direction.right = true;
+            }
+            case 4 -> {
+                direction.topLeft = true;
+                direction.left = true;
+                direction.downLeft = true;
+            }
+            case 5 -> {
+                direction.topRight = true;
+                direction.right = true;
+                direction.downRight = true;
+            }
+            case 6 -> {
+                direction.left = true;
+                direction.downLeft = true;
+                direction.down = true;
+            }
+            case 7 -> {
+                direction.downLeft = true;
+                direction.down = true;
+                direction.downRight = true;
+            }
+            case 8 -> {
+                direction.right = true;
+                direction.downRight = true;
+                direction.down = true;
+            }
+        }
+    }
+
+    private void setAllDirectionFalse() {
+        direction.topLeft = false;
+        direction.top = false;
+        direction.topRight = false;
+        direction.left = false;
+        direction.right = false;
+        direction.downLeft = false;
+        direction.down = false;
+        direction.downRight = false;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public class Direction {
+        private boolean topLeft;
+        private boolean top;
+        private boolean topRight;
+        private boolean left;
+        private boolean right;
+        private boolean downLeft;
+        private boolean down;
+        private boolean downRight;
+
+        public boolean isTopLeft() {
+            return topLeft;
+        }
+
+        public boolean isTop() {
+            return top;
+        }
+
+        public boolean isTopRight() {
+            return topRight;
+        }
+
+        public boolean isLeft() {
+            return left;
+        }
+
+        public boolean isRight() {
+            return right;
+        }
+
+        public boolean isDownLeft() {
+            return downLeft;
+        }
+
+        public boolean isDown() {
+            return down;
+        }
+
+        public boolean isDownRight() {
+            return downRight;
+        }
     }
 
     @Override
