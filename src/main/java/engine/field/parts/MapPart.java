@@ -127,12 +127,17 @@ public class MapPart {
         for (int i = 0; i < part.length; i++) {
             for (int y = 0; y < part[i].length; y++) {
                 if (part[i][y].isActive())
-                    stringBuilder.append("1, ");
+                    stringBuilder.append("1 ");
                 else
-                    stringBuilder.append("0, ");
+                    stringBuilder.append("0 ");
             }
             stringBuilder.append("\n");
         }
+        stringBuilder.append("x = " + getCoordinatesEnter()[0].x());
+        stringBuilder.append(", ");
+        stringBuilder.append("y = " + getCoordinatesEnter()[0].y() + "\n");
+
+        stringBuilder.append("direction enter = " + getDirectionEnter() + ", direction exit = " + getDirectionExit() + "\n");
 
         return stringBuilder.toString();
     }

@@ -25,7 +25,7 @@ public class StandardPartMapStart {
             case 3:
                 return initPartStart4;
         }
-        return initPartStart1;
+        return null;
     }
 
     public static byte[][] initPartStart1 = {

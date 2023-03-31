@@ -124,4 +124,27 @@ public class Util {
                 cellStartPlayerTwo,
                 finishCells);
     }
+
+    /**
+     * Возвращает какое направление должно быть в случае если предыдущая часть была с направлением выхода
+     * top - 1;
+     * down - 2;
+     * left - 3;
+     * right - 4;
+     * @param directionExit направление выхода в предыдущей части
+     * @return направление входа которое должно быть в новой части
+     */
+    public static byte getDirectionEnter(byte directionExit) {
+        switch (directionExit) {
+            case 1:
+                return 2;
+            case 2:
+                return 1;
+            case 3:
+                return 4;
+            case 4:
+                return 3;
+        }
+        return 0;
+    }
 }
