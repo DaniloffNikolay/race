@@ -1,5 +1,7 @@
 package engine;
 
+import engine.field.Cell;
+
 public class Player {
     private Cell playerCell;
     private byte speed = 1;

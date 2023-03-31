@@ -1,4 +1,4 @@
-package engine;
+package engine.field;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +29,9 @@ public class Cell {
 
     public void setPlayerOneHere(boolean playerOneHere) {
         isPlayerOneHere = playerOneHere;
+        if(playerOneHere)  {
+            isPlayerOneWasHere = true;
+        }
     }
 
     public boolean isPlayerTwoHere() {
@@ -37,22 +40,17 @@ public class Cell {
 
     public void setPlayerTwoHere(boolean playerTwoHere) {
         isPlayerTwoHere = playerTwoHere;
+        if(playerTwoHere)  {
+            isPlayerTwoWasHere = true;
+        }
     }
 
     public boolean isPlayerOneWasHere() {
         return isPlayerOneWasHere;
     }
 
-    public void setPlayerOneWasHere(boolean playerOneWasHere) {
-        isPlayerOneWasHere = playerOneWasHere;
-    }
-
     public boolean isPlayerTwoWasHere() {
         return isPlayerTwoWasHere;
-    }
-
-    public void setPlayerTwoWasHere(boolean playerTwoWasHere) {
-        isPlayerTwoWasHere = playerTwoWasHere;
     }
 
     public int getX() {

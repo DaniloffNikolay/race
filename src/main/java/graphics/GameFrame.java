@@ -1,6 +1,6 @@
 package graphics;
 
-import engine.Field;
+import engine.field.Field;
 import engine.Game;
 import engine.Step;
 import graphics.panels.MapPanel;

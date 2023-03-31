@@ -1,4 +1,4 @@
-import engine.Field;
+import engine.field.Field;
 import engine.Game;
 import graphics.StartFrame;
 

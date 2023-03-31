@@ -1,4 +1,6 @@
-package engine;
+package engine.field;
+
+import engine.Player;
 
 public class Field {
     private final Cell[][] cells;
