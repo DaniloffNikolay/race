@@ -99,4 +99,24 @@ public class MapPart {
     public String getPathToBackground() {
         return pathToBackground;
     }
+
+    public boolean isStartingPart() {
+        return isStartingPart;
+    }
+
+    public boolean isFinalPart() {
+        return isFinalPart;
+    }
+
+    public Cell getCellStartPlayerOne() {
+        return cellStartPlayerOne;
+    }
+
+    public Cell getCellStartPlayerTwo() {
+        return cellStartPlayerTwo;
+    }
+
+    public Cell[] getFinishСells() {
+        return finishСells;
+    }
 }

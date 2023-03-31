@@ -1,25 +1,54 @@
 package engine.field;
 
 import engine.Player;
+import engine.field.parts.MapPart;
 
 public class Field {
     private final Cell[][] cells;
+    private final MapPart[] map;
     private final Cell cellStartPlayerOne;
     private final Cell cellStartPlayerTwo;
 
     private Cell cellPlayerOne;
     private Cell cellPlayerTwo;
+
+    private final Cell[] finishСells;
     private byte startDirection;
 
-    private Field(Cell[][] cells, Cell cellStartPlayerOne, Cell cellStartPlayerTwo, byte startDirection) {
+    private Field(Cell[][] cells, Cell cellStartPlayerOne, Cell cellStartPlayerTwo, Cell[] finishСells, byte startDirection) {
         this.cells = cells;
+        map = null;
         this.cellStartPlayerOne = cellStartPlayerOne;
         this.cellStartPlayerTwo = cellStartPlayerTwo;
         cellStartPlayerOne.setPlayerOneHere(true);
         cellStartPlayerTwo.setPlayerTwoHere(true);
         cellPlayerOne = cellStartPlayerOne;
         cellPlayerTwo = cellStartPlayerTwo;
+        this.finishСells = finishСells;
         this.startDirection = startDirection;
+    }
+
+    private Field(MapPart[] map) {
+        cells = null;
+        this.map = map;
+        cellStartPlayerOne = map[0].getCellStartPlayerOne();
+        cellStartPlayerTwo = map[0].getCellStartPlayerTwo();
+        cellStartPlayerOne.setPlayerOneHere(true);
+        cellStartPlayerTwo.setPlayerTwoHere(true);
+        cellPlayerOne = cellStartPlayerOne;
+        cellPlayerTwo = cellStartPlayerTwo;
+        finishСells = map[map.length - 1].getFinishСells();
+
+        if (map[0].getDirectionEnter() == 1) //начало сверху
+            startDirection = 7;
+        else if (map[0].getDirectionEnter() == 2) //начало снизу
+            startDirection = 2;
+        else if (map[0].getDirectionEnter() == 3) //начало слева
+            startDirection = 5;
+        else if (map[0].getDirectionEnter() == 4) //начало справа
+            startDirection = 4;
+        else
+            startDirection = 0;
     }
 
     public boolean movePlayerOne(Player player, byte direction, byte speed) {
@@ -119,7 +148,8 @@ public class Field {
      * @return сгенерируемое случайное поле
      */
     private static Field getRandomField() {
-        return getTestField();
+        return new Field(MapGenerator.getField(10));
+//        return getTestField();
     }
 
     private static Field getTestField() {
@@ -133,7 +163,7 @@ public class Field {
                     cells[i][y] = new Cell(y, i, false);
             }
         }
-        return new Field(cells, cells[38][4], cells[38][6], (byte) 2);
+        return new Field(cells, cells[38][4], cells[38][6], null, (byte) 2);
     }
 
     private static byte[][] initField = {
