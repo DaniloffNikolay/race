@@ -29,6 +29,8 @@ public class Field {
     }
 
     private Field(MapPart[] map) {
+        System.out.println("Идея в том, что на каждого игрока будет своя карта состоящая из двух частей, \n" +
+                "как только игрок переместился из первой части на вторую, так сразу первая отгружается и загружается третья и т.д.");
         cells = null;
         this.map = map;
         cellStartPlayerOne = map[0].getCellStartPlayerOne();
