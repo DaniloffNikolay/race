@@ -12,6 +12,22 @@ package engine.field.parts;
  */
 public class StandardPartMapStart {
 
+    public static final int COUNT = 4;
+
+    public static byte[][] getInitPartStart(int index) {
+        switch (index) {
+            case 0:
+                return initPartStart1;
+            case 1:
+                return initPartStart2;
+            case 2:
+                return initPartStart3;
+            case 3:
+                return initPartStart4;
+        }
+        return initPartStart1;
+    }
+
     public static byte[][] initPartStart1 = {
             {0, 0, 0, 0, 0, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0},

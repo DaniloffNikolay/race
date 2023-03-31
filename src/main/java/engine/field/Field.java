@@ -148,8 +148,8 @@ public class Field {
      * @return сгенерируемое случайное поле
      */
     private static Field getRandomField() {
-        return new Field(MapGenerator.getField(10));
-//        return getTestField();
+//        return new Field(MapGenerator.getField(10));
+        return getTestField();
     }
 
     private static Field getTestField() {

@@ -119,4 +119,21 @@ public class MapPart {
     public Cell[] getFinishСells() {
         return finishСells;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < part.length; i++) {
+            for (int y = 0; y < part[i].length; y++) {
+                if (part[i][y].isActive())
+                    stringBuilder.append("1, ");
+                else
+                    stringBuilder.append("0, ");
+            }
+            stringBuilder.append("\n");
+        }
+
+        return stringBuilder.toString();
+    }
 }
