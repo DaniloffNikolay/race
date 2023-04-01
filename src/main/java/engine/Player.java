@@ -1,17 +1,14 @@
 package engine;
 
 import engine.field.Cell;
+import engine.field.parts.MapPart;
 
 public class Player {
     private Cell playerCell;
+    private Cell[][] map;
     private byte speed = 1;
     private String name;
     private Direction direction;
-
-    public Player(Cell playerCell, String name) {
-        this.playerCell = playerCell;
-        this.name = name;
-    }
 
     public Player(String name) {
         this.name = name;
@@ -163,6 +160,14 @@ public class Player {
         public boolean isDownRight() {
             return downRight;
         }
+    }
+
+    public Cell[][] getMap() {
+        return map;
+    }
+
+    public void setMap(Cell[][] map) {
+        this.map = map;
     }
 
     public Cell getPlayerCell() {

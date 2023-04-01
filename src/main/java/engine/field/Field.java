@@ -1,19 +1,19 @@
 package engine.field;
 
 import engine.Player;
+import engine.field.parts.MapForPlayer;
 import engine.field.parts.MapPart;
 
 public class Field {
     private final Cell[][] cells;
+    private MapForPlayer mapPlayerOne;
+    private MapForPlayer mapPlayerTwo;
     private final MapPart[] map;
     private final Cell cellStartPlayerOne;
     private final Cell cellStartPlayerTwo;
 
-
     private Player playerOne;
     private Player playerTwo;
-    private Cell cellPlayerOne;
-    private Cell cellPlayerTwo;
 
     private final Cell[] finishСells;
     private byte startDirection;
@@ -25,8 +25,6 @@ public class Field {
         this.cellStartPlayerTwo = cellStartPlayerTwo;
         cellStartPlayerOne.setPlayerOneHere(true);
         cellStartPlayerTwo.setPlayerTwoHere(true);
-        cellPlayerOne = cellStartPlayerOne;
-        cellPlayerTwo = cellStartPlayerTwo;
         this.finishСells = finishСells;
         this.startDirection = startDirection;
     }
@@ -40,8 +38,6 @@ public class Field {
         cellStartPlayerTwo = map[0].getCellStartPlayerTwo();
         cellStartPlayerOne.setPlayerOneHere(true);
         cellStartPlayerTwo.setPlayerTwoHere(true);
-        cellPlayerOne = cellStartPlayerOne;
-        cellPlayerTwo = cellStartPlayerTwo;
         finishСells = map[map.length - 1].getFinishСells();
 
         if (map[0].getDirectionEnter() == 1) //начало сверху
@@ -62,15 +58,15 @@ public class Field {
             return true;
         }
 
-        Cell directionCell = getCellDirection(cellPlayerOne, direction);
+        Cell directionCell = getCellDirection(playerOne.getPlayerCell(), direction);
         if (!directionCell.isActive()) {//врезался
             player.setSpeedAfterCrash();
             player.setAllPossibleDirections((byte) 0);
             return false;
         } else {
-            cellPlayerOne.setPlayerOneHere(false);
-            cellPlayerOne = directionCell;
-            cellPlayerOne.setPlayerOneHere(true);
+            playerOne.getPlayerCell().setPlayerOneHere(false);
+            playerOne.setPlayerCell(directionCell);
+            playerOne.getPlayerCell().setPlayerOneHere(true);
             speed--;
         }
 
@@ -83,15 +79,15 @@ public class Field {
             return true;
         }
 
-        Cell directionCell = getCellDirection(cellPlayerTwo, direction);
+        Cell directionCell = getCellDirection(playerTwo.getPlayerCell(), direction);
         if (!directionCell.isActive()) {//врезался
             player.setSpeedAfterCrash();
             player.setAllPossibleDirections((byte) 0);
             return false;
         } else {
-            cellPlayerTwo.setPlayerTwoHere(false);
-            cellPlayerTwo = directionCell;
-            cellPlayerTwo.setPlayerTwoHere(true);
+            playerTwo.getPlayerCell().setPlayerTwoHere(false);
+            playerTwo.setPlayerCell(directionCell);
+            playerTwo.getPlayerCell().setPlayerTwoHere(true);
             speed--;
         }
 
@@ -218,29 +214,6 @@ public class Field {
         return cells;
     }
 
-    public Cell getCellStartPlayerOne() {
-        return cellStartPlayerOne;
-    }
-
-    public Cell getCellStartPlayerTwo() {
-        return cellStartPlayerTwo;
-    }
-
-    public Cell getCellPlayerOne() {
-        return cellPlayerOne;
-    }
-
-    public void setCellPlayerOne(Cell cellPlayerOne) {
-        this.cellPlayerOne = cellPlayerOne;
-    }
-
-    public Cell getCellPlayerTwo() {
-        return cellPlayerTwo;
-    }
-
-    public void setCellPlayerTwo(Cell cellPlayerTwo) {
-        this.cellPlayerTwo = cellPlayerTwo;
-    }
 
     public byte getStartDirection() {
         return startDirection;
@@ -252,5 +225,11 @@ public class Field {
 
         playerOne.setAllPossibleDirections(getStartDirection());
         playerTwo.setAllPossibleDirections(getStartDirection());
+
+        playerOne.setPlayerCell(cellStartPlayerOne);
+        playerTwo.setPlayerCell(cellStartPlayerTwo);
+
+        mapPlayerOne = new MapForPlayer(playerOne, map);
+        mapPlayerTwo = new MapForPlayer(playerTwo, map);
     }
 }
