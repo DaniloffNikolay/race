@@ -32,6 +32,7 @@ public class Field {
     private Field(MapPart[] map) {
         System.out.println("Идея в том, что на каждого игрока будет своя карта состоящая из двух частей, \n" +
                 "как только игрок переместился из первой части на вторую, так сразу первая отгружается и загружается третья и т.д.");
+        System.out.println("Все вроде реализовано, кроме того, что надо ячейкам устанавливать координаты заново при сборке карты игрока");
         cells = null;
         this.map = map;
         cellStartPlayerOne = map[0].getCellStartPlayerOne();
@@ -156,8 +157,8 @@ public class Field {
     private static Field getTestField() {
         Cell[][] cells = new Cell[initField[0].length][initField.length];
 
-        for (int i = 0; i < cells.length; i++) {
-            for (int y = 0; y < cells[i].length; y++) {
+        for (byte i = 0; i < cells.length; i++) {
+            for (byte y = 0; y < cells[i].length; y++) {
                 if(initField[i][y] == 1)
                     cells[i][y] = new Cell(y, i, true);
                 else

@@ -39,8 +39,8 @@ public class MapForPlayer {
             case 1 -> {                             //тогда первый снизу второй сверху
                 mapForPlayer = new Cell[32][16];
 
-                for (int i = 0; i < cellsNextPart.length; i++) {
-                    for (int y = 0; y < cellsNextPart[i].length; y++) {
+                for (byte i = 0; i < cellsNextPart.length; i++) {
+                    for (byte y = 0; y < cellsNextPart[i].length; y++) {
                         mapForPlayer[i][y] = cellsNextPart[i][y];
 
                         if (mapForPlayer[i][y].isActive()) {
@@ -49,25 +49,26 @@ public class MapForPlayer {
                     }
                 }
 
-                for (int i = 0; i < cellsFirstPart.length; i++) {
-                    for (int y = 0; y < cellsFirstPart[i].length; y++) {
+                for (byte i = 0; i < cellsFirstPart.length; i++) {
+                    for (byte y = 0; y < cellsFirstPart[i].length; y++) {
                         mapForPlayer[i + 16][y] = cellsFirstPart[i][y];
+                        mapForPlayer[i + 16][y].setXY(y, (byte) (i + 16));
                     }
                 }
             }
             case 2 -> {                             //тогда первый сверху второй снизу
                 mapForPlayer = new Cell[32][16];
 
-                for (int i = 0; i < cellsFirstPart.length; i++) {
-                    for (int y = 0; y < cellsFirstPart[i].length; y++) {
+                for (byte i = 0; i < cellsFirstPart.length; i++) {
+                    for (byte y = 0; y < cellsFirstPart[i].length; y++) {
                         mapForPlayer[i][y] = cellsFirstPart[i][y];
                     }
                 }
 
-                for (int i = 0; i < cellsNextPart.length; i++) {
-                    for (int y = 0; y < cellsNextPart[i].length; y++) {
+                for (byte i = 0; i < cellsNextPart.length; i++) {
+                    for (byte y = 0; y < cellsNextPart[i].length; y++) {
                         mapForPlayer[i + 16][y] = cellsNextPart[i][y];
-
+                        mapForPlayer[i + 16][y].setXY(y, (byte) (i + 16));
                         if (mapForPlayer[i + 16][y].isActive()) {
                             allActivesCellsNextPart.add(mapForPlayer[i + 16][y]);
                         }
@@ -77,8 +78,8 @@ public class MapForPlayer {
             case 3 -> {                             //тогда первый справа второй слева
                 mapForPlayer = new Cell[16][32];
 
-                for (int i = 0; i < cellsNextPart.length; i++) {
-                    for (int y = 0; y < cellsNextPart[i].length; y++) {
+                for (byte i = 0; i < cellsNextPart.length; i++) {
+                    for (byte y = 0; y < cellsNextPart[i].length; y++) {
                         mapForPlayer[i][y] = cellsNextPart[i][y];
 
                         if (mapForPlayer[i][y].isActive()) {
@@ -87,25 +88,26 @@ public class MapForPlayer {
                     }
                 }
 
-                for (int i = 0; i < cellsFirstPart.length; i++) {
-                    for (int y = 0; y < cellsFirstPart[i].length; y++) {
+                for (byte i = 0; i < cellsFirstPart.length; i++) {
+                    for (byte y = 0; y < cellsFirstPart[i].length; y++) {
                         mapForPlayer[i][y + 16] = cellsFirstPart[i][y];
+                        mapForPlayer[i][y + 16].setXY((byte) (y + 16), i);
                     }
                 }
             }
             case 4 -> {                             //тогда первый слева второй справа
                 mapForPlayer = new Cell[16][32];
 
-                for (int i = 0; i < cellsFirstPart.length; i++) {
-                    for (int y = 0; y < cellsFirstPart[i].length; y++) {
+                for (byte i = 0; i < cellsFirstPart.length; i++) {
+                    for (byte y = 0; y < cellsFirstPart[i].length; y++) {
                         mapForPlayer[i][y] = cellsFirstPart[i][y];
                     }
                 }
 
-                for (int i = 0; i < cellsNextPart.length; i++) {
-                    for (int y = 0; y < cellsNextPart[i].length; y++) {
+                for (byte i = 0; i < cellsNextPart.length; i++) {
+                    for (byte y = 0; y < cellsNextPart[i].length; y++) {
                         mapForPlayer[i][y + 16] = cellsNextPart[i][y];
-
+                        mapForPlayer[i][y + 16].setXY((byte) (y + 16), i);
                         if (mapForPlayer[i][y + 16].isActive()) {
                             allActivesCellsNextPart.add(mapForPlayer[i][y + 16]);
                         }

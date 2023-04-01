@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cell {
-    private final int x;
-    private final int y;
+    private byte x;
+    private byte y;
 
     private final boolean active;
     private boolean isPlayerOneHere = false;
@@ -13,9 +13,13 @@ public class Cell {
     private boolean isPlayerOneWasHere = false;
     private boolean isPlayerTwoWasHere = false;
 
-    public Cell(int x, int y, boolean active) {
+    public Cell(byte x, byte y, boolean active) {
         this.x = x;
         this.y = y;
+        this.active = active;
+    }
+
+    public Cell(boolean active) {
         this.active = active;
     }
 
@@ -53,11 +57,16 @@ public class Cell {
         return isPlayerTwoWasHere;
     }
 
-    public int getX() {
+    public void setXY(byte x, byte y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public byte getX() {
         return x;
     }
 
-    public int getY() {
+    public byte getY() {
         return y;
     }
 }
