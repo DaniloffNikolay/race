@@ -9,6 +9,9 @@ public class Field {
     private final Cell cellStartPlayerOne;
     private final Cell cellStartPlayerTwo;
 
+
+    private Player playerOne;
+    private Player playerTwo;
     private Cell cellPlayerOne;
     private Cell cellPlayerTwo;
 
@@ -141,7 +144,7 @@ public class Field {
         return cells[y][x];
     }
 
-    public static Field getField() {
+    public static Field getInstance() {
         return getRandomField();
     }
 
@@ -241,5 +244,13 @@ public class Field {
 
     public byte getStartDirection() {
         return startDirection;
+    }
+
+    public void setPlayers(Player playerOne, Player playerTwo) {
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+
+        playerOne.setAllPossibleDirections(getStartDirection());
+        playerTwo.setAllPossibleDirections(getStartDirection());
     }
 }

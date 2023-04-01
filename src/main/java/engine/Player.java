@@ -13,6 +13,10 @@ public class Player {
         this.name = name;
     }
 
+    public Player(String name) {
+        this.name = name;
+    }
+
     private void speedBoost() {
         if (speed < 6)
             speed++;
@@ -159,6 +163,14 @@ public class Player {
         public boolean isDownRight() {
             return downRight;
         }
+    }
+
+    public Cell getPlayerCell() {
+        return playerCell;
+    }
+
+    public void setPlayerCell(Cell playerCell) {
+        this.playerCell = playerCell;
     }
 
     @Override

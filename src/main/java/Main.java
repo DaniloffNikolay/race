@@ -1,3 +1,4 @@
+import engine.Player;
 import engine.field.Field;
 import engine.Game;
 import graphics.StartFrame;
@@ -20,7 +21,9 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-        Game game = new Game(Field.getField());
+        Player playerOne = new Player("Player one");
+        Player playerTwo = new Player("Player two");
+        Game game = new Game(Field.getInstance(), playerOne, playerTwo);
         main.startApplication(game);
     }
 }

@@ -2,6 +2,8 @@ package engine;
 
 import engine.field.Field;
 
+import java.util.Random;
+
 public class Game {
 
     private Field field;
@@ -12,13 +14,18 @@ public class Game {
     private long timeStart;
     private long totalTime;
 
-    public Game(Field field) {
+    public Game(Field field, Player playerOne, Player playerTwo) {
         this.field = field;
-        playerOne = new Player(field.getCellStartPlayerOne(), "Player one");
-        playerTwo = new Player(field.getCellStartPlayerTwo(), "Player two");
-        playerOne.setAllPossibleDirections(field.getStartDirection());
-        playerTwo.setAllPossibleDirections(field.getStartDirection());
-        isNext = playerOne;
+
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+        field.setPlayers(playerOne, playerTwo);
+
+        Random random = new Random();
+        switch (random.nextInt(2) + 1) {
+            case 1 -> isNext = playerOne;
+            case 2 -> isNext = playerTwo;
+        }
     }
 
     public void start() {
