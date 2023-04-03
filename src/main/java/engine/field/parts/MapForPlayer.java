@@ -21,6 +21,44 @@ public class MapForPlayer {
         indexNextPart++;
     }
 
+    public Cell getCellDirection(Cell cellStart, byte direction) {
+        int x = cellStart.getX();
+        int y = cellStart.getY();
+
+        switch (direction) {
+            case 1 -> { //top left
+                x = x - 1;
+                y = y - 1;
+            }
+            case 2 -> { //top
+                y = y - 1;
+            }
+            case 3 -> { //top right
+                x = x + 1;
+                y = y - 1;
+            }
+            case 4 -> { //left
+                x = x - 1;
+            }
+            case 5 -> { //right
+                x = x + 1;
+            }
+            case 6 -> { //down left
+                x = x - 1;
+                y = y + 1;
+            }
+            case 7 -> { //down
+                y = y + 1;
+            }
+            case 8 -> { //down right
+                x = x + 1;
+                y = y + 1;
+            }
+        }
+
+        return mapForPlayer[y][x];
+    }
+
     public Cell[][] getMapForPlayer() {
         if (indexNextPart != 10 && allActivesCellsNextPart.contains(player.getPlayerCell())) {
             setMapForPlayer(map[indexNextPart], map[indexNextPart + 1]);

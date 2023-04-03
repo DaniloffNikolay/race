@@ -102,7 +102,7 @@ public class Field {
      * @return ячейку направления
      */
     private Cell getCellDirection(Cell cellStart, MapForPlayer mapPlayer, byte direction) {
-        int x = cellStart.getX();
+        /*int x = cellStart.getX();
         int y = cellStart.getY();
 
         switch (direction) {
@@ -134,9 +134,10 @@ public class Field {
                 x = x + 1;
                 y = y + 1;
             }
-        }
+        }*/
 
-        return mapPlayer.getMapForPlayer()[y][x];
+        //System.out.println("Надо сделать проверку на смену поля т.к. х и у меняются и при перестроении карты может получится так, что у следующей ячейки другие координаты");
+        return mapPlayer.getCellDirection(cellStart, direction);
     }
 
     public static Field getInstance() {
@@ -152,6 +153,35 @@ public class Field {
 //        return getTestField();
     }
 
+    public byte getStartDirection() {
+        return startDirection;
+    }
+
+    public void setPlayers(Player playerOne, Player playerTwo) {
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+
+        playerOne.setAllPossibleDirections(getStartDirection());
+        playerTwo.setAllPossibleDirections(getStartDirection());
+
+        playerOne.setPlayerCell(cellStartPlayerOne);
+        playerTwo.setPlayerCell(cellStartPlayerTwo);
+
+        mapPlayerOne = new MapForPlayer(playerOne, map);
+        mapPlayerTwo = new MapForPlayer(playerTwo, map);
+    }
+
+    public MapForPlayer getMapPlayerOne() {
+        return mapPlayerOne;
+    }
+
+    public MapForPlayer getMapPlayerTwo() {
+        return mapPlayerTwo;
+    }
+
+
+
+    //было написано до случайной генерации надо удалить после того как доделается вариант со случайной генерацией карт
     private static Field getTestField() {
         Cell[][] cells = new Cell[initField[0].length][initField.length];
 
@@ -208,32 +238,4 @@ public class Field {
             {0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0}
     };
-
-
-
-    public byte getStartDirection() {
-        return startDirection;
-    }
-
-    public void setPlayers(Player playerOne, Player playerTwo) {
-        this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
-
-        playerOne.setAllPossibleDirections(getStartDirection());
-        playerTwo.setAllPossibleDirections(getStartDirection());
-
-        playerOne.setPlayerCell(cellStartPlayerOne);
-        playerTwo.setPlayerCell(cellStartPlayerTwo);
-
-        mapPlayerOne = new MapForPlayer(playerOne, map);
-        mapPlayerTwo = new MapForPlayer(playerTwo, map);
-    }
-
-    public MapForPlayer getMapPlayerOne() {
-        return mapPlayerOne;
-    }
-
-    public MapForPlayer getMapPlayerTwo() {
-        return mapPlayerTwo;
-    }
 }
