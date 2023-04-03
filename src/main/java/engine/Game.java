@@ -41,13 +41,18 @@ public class Game {
 
     public void action(Step step) {
         Player player = step.getPlayer();
+
+        /*System.out.println("ходит игрок: " + player + ", cell x = " +
+                player.getPlayerCell().getX() + ", y = " + player.getPlayerCell().getY() +
+                ", direction = " + step.getDirection());*/
+
         player.setSpeed(step.isBoost(), step.isBrake());
         if (playerOne == player) {
-            field.movePlayerOne(player, step.getDirection(), player.getSpeed());
             player.setMap(field.getMapPlayerOne().getMapForPlayer());
+            field.movePlayerOne(player, step.getDirection(), player.getSpeed());
         } else if (playerTwo == player) {
-            field.movePlayerTwo(player, step.getDirection(), player.getSpeed());
             player.setMap(field.getMapPlayerTwo().getMapForPlayer());
+            field.movePlayerTwo(player, step.getDirection(), player.getSpeed());
         }
     }
 

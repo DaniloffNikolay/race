@@ -28,6 +28,7 @@ public class MapPanel extends JComponent {
         int half = 8;
         Graphics2D g2 = (Graphics2D)g;
 
+
         Player player = game.whoIsNext();
         Cell[][] map = player.getMap();
 

@@ -19,9 +19,6 @@ public class Field {
 
 
     private Field(MapPart[] map) {
-        System.out.println("Идея в том, что на каждого игрока будет своя карта состоящая из двух частей, \n" +
-                "как только игрок переместился из первой части на вторую, так сразу первая отгружается и загружается третья и т.д.");
-        System.out.println("Все вроде реализовано, кроме того, что надо ячейкам устанавливать координаты заново при сборке карты игрока");
         this.map = map;
         cellStartPlayerOne = map[0].getCellStartPlayerOne();
         cellStartPlayerTwo = map[0].getCellStartPlayerTwo();
@@ -41,7 +38,13 @@ public class Field {
             startDirection = 0;
     }
 
+
     public boolean movePlayerOne(Player player, byte direction, byte speed) {
+
+        /*System.out.println("ходит игрок: " + player + ", cell x = " +
+                player.getPlayerCell().getX() + ", y = " + player.getPlayerCell().getY() +
+                ", direction = " + direction + ", speed = " + speed);*/
+
         if (speed == 0) {
             player.setAllPossibleDirections(direction);
             return true;
@@ -63,6 +66,10 @@ public class Field {
     }
 
     public boolean movePlayerTwo(Player player, byte direction, byte speed) {
+//        System.out.println("ходит игрок: " + player + ", cell x = " +
+//                player.getPlayerCell().getX() + ", y = " + player.getPlayerCell().getY() +
+//                ", direction = " + direction + ", speed = " + speed);
+
         if (speed == 0) {
             player.setAllPossibleDirections(direction);
             return true;
@@ -92,41 +99,6 @@ public class Field {
      * @return ячейку направления
      */
     private Cell getCellDirection(Cell cellStart, MapForPlayer mapPlayer, byte direction) {
-        /*int x = cellStart.getX();
-        int y = cellStart.getY();
-
-        switch (direction) {
-            case 1 -> { //top left
-                x = x - 1;
-                y = y - 1;
-            }
-            case 2 -> { //top
-                y = y - 1;
-            }
-            case 3 -> { //top right
-                x = x + 1;
-                y = y - 1;
-            }
-            case 4 -> { //left
-                x = x - 1;
-            }
-            case 5 -> { //right
-                x = x + 1;
-            }
-            case 6 -> { //down left
-                x = x - 1;
-                y = y + 1;
-            }
-            case 7 -> { //down
-                y = y + 1;
-            }
-            case 8 -> { //down right
-                x = x + 1;
-                y = y + 1;
-            }
-        }*/
-
-        //System.out.println("Надо сделать проверку на смену поля т.к. х и у меняются и при перестроении карты может получится так, что у следующей ячейки другие координаты");
         return mapPlayer.getCellDirection(cellStart, direction);
     }
 
@@ -185,7 +157,7 @@ public class Field {
         this.startDirection = startDirection;
     }
 
-    private static Field getTestField() {
+    /*private static Field getTestField() {
         Cell[][] cells = new Cell[initField[0].length][initField.length];
 
         for (byte i = 0; i < cells.length; i++) {
@@ -240,5 +212,5 @@ public class Field {
             {0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0}
-    };
+    };*/
 }

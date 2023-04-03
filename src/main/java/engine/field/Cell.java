@@ -69,4 +69,9 @@ public class Cell {
     public byte getY() {
         return y;
     }
+
+    @Override
+    public String toString() {
+        return "" + (isActive() ? 1 : 0);
+    }
 }

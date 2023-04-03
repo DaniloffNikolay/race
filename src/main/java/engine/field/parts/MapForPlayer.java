@@ -10,15 +10,14 @@ public class MapForPlayer {
     private final Player player;
     private Cell[][] mapForPlayer;
     private final MapPart[] map;
-    private byte indexNextPart = 0;
+    private byte indexNextPart = 1;
 
     private Set<Cell> allActivesCellsNextPart;
 
     public MapForPlayer(Player player, MapPart[] map) {
         this.player = player;
         this.map = map;
-        setMapForPlayer(map[indexNextPart], map[indexNextPart + 1]);
-        indexNextPart++;
+        setMapForPlayer(map[indexNextPart - 1], map[indexNextPart]);
     }
 
     public Cell getCellDirection(Cell cellStart, byte direction) {
@@ -60,9 +59,15 @@ public class MapForPlayer {
     }
 
     public Cell[][] getMapForPlayer() {
-        if (indexNextPart != 10 && allActivesCellsNextPart.contains(player.getPlayerCell())) {
+        if (indexNextPart > 8) {
+            setMapForPlayer(map[indexNextPart - 1], map[indexNextPart]);
+            return mapForPlayer;
+        }
+        if (allActivesCellsNextPart.contains(player.getPlayerCell())) {
             setMapForPlayer(map[indexNextPart], map[indexNextPart + 1]);
             indexNextPart++;
+        } else {
+            setMapForPlayer(map[indexNextPart - 1], map[indexNextPart]);
         }
 
         return mapForPlayer;
@@ -80,6 +85,7 @@ public class MapForPlayer {
                 for (byte i = 0; i < cellsNextPart.length; i++) {
                     for (byte y = 0; y < cellsNextPart[i].length; y++) {
                         mapForPlayer[i][y] = cellsNextPart[i][y];
+                        mapForPlayer[i][y].setXY(y, i);
 
                         if (mapForPlayer[i][y].isActive()) {
                             allActivesCellsNextPart.add(mapForPlayer[i][y]);
@@ -100,12 +106,14 @@ public class MapForPlayer {
                 for (byte i = 0; i < cellsFirstPart.length; i++) {
                     for (byte y = 0; y < cellsFirstPart[i].length; y++) {
                         mapForPlayer[i][y] = cellsFirstPart[i][y];
+                        mapForPlayer[i][y].setXY(y, i);
                     }
                 }
 
                 for (byte i = 0; i < cellsNextPart.length; i++) {
                     for (byte y = 0; y < cellsNextPart[i].length; y++) {
                         mapForPlayer[i + 16][y] = cellsNextPart[i][y];
+
                         mapForPlayer[i + 16][y].setXY(y, (byte) (i + 16));
                         if (mapForPlayer[i + 16][y].isActive()) {
                             allActivesCellsNextPart.add(mapForPlayer[i + 16][y]);
@@ -119,6 +127,7 @@ public class MapForPlayer {
                 for (byte i = 0; i < cellsNextPart.length; i++) {
                     for (byte y = 0; y < cellsNextPart[i].length; y++) {
                         mapForPlayer[i][y] = cellsNextPart[i][y];
+                        mapForPlayer[i][y].setXY(y, i);
 
                         if (mapForPlayer[i][y].isActive()) {
                             allActivesCellsNextPart.add(mapForPlayer[i][y]);
@@ -139,15 +148,17 @@ public class MapForPlayer {
                 for (byte i = 0; i < cellsFirstPart.length; i++) {
                     for (byte y = 0; y < cellsFirstPart[i].length; y++) {
                         mapForPlayer[i][y] = cellsFirstPart[i][y];
+                        mapForPlayer[i][y].setXY(y, i);
                     }
                 }
 
                 for (byte i = 0; i < cellsNextPart.length; i++) {
                     for (byte y = 0; y < cellsNextPart[i].length; y++) {
-                        mapForPlayer[i][y + 16] = cellsNextPart[i][y];
-                        mapForPlayer[i][y + 16].setXY((byte) (y + 16), i);
-                        if (mapForPlayer[i][y + 16].isActive()) {
-                            allActivesCellsNextPart.add(mapForPlayer[i][y + 16]);
+                        Cell cell = cellsNextPart[i][y];
+                        mapForPlayer[i][y + 16] = cell;
+                        cell.setXY((byte) (y + 16), i);
+                        if (cell.isActive()) {
+                            allActivesCellsNextPart.add(cell);
                         }
                     }
                 }
