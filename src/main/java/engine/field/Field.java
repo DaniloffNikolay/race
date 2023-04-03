@@ -17,16 +17,6 @@ public class Field {
     private final Cell[] finishСells;
     private byte startDirection;
 
-    private Field(Cell[][] cells, Cell cellStartPlayerOne, Cell cellStartPlayerTwo, Cell[] finishСells, byte startDirection) {
-        //this.cells = cells;
-        map = null;
-        this.cellStartPlayerOne = cellStartPlayerOne;
-        this.cellStartPlayerTwo = cellStartPlayerTwo;
-        cellStartPlayerOne.setPlayerOneHere(true);
-        cellStartPlayerTwo.setPlayerTwoHere(true);
-        this.finishСells = finishСells;
-        this.startDirection = startDirection;
-    }
 
     private Field(MapPart[] map) {
         System.out.println("Идея в том, что на каждого игрока будет своя карта состоящая из двух частей, \n" +
@@ -182,6 +172,19 @@ public class Field {
 
 
     //было написано до случайной генерации надо удалить после того как доделается вариант со случайной генерацией карт
+
+    private Cell[][] cells;
+    private Field(Cell[][] cells, Cell cellStartPlayerOne, Cell cellStartPlayerTwo, Cell[] finishСells, byte startDirection) {
+        this.cells = cells;
+        map = null;
+        this.cellStartPlayerOne = cellStartPlayerOne;
+        this.cellStartPlayerTwo = cellStartPlayerTwo;
+        cellStartPlayerOne.setPlayerOneHere(true);
+        cellStartPlayerTwo.setPlayerTwoHere(true);
+        this.finishСells = finishСells;
+        this.startDirection = startDirection;
+    }
+
     private static Field getTestField() {
         Cell[][] cells = new Cell[initField[0].length][initField.length];
 
