@@ -21,6 +21,9 @@ public class Game {
         this.playerTwo = playerTwo;
         field.setPlayers(playerOne, playerTwo);
 
+        playerOne.setMap(field.getMapPlayerOne().getMapForPlayer());
+        playerTwo.setMap(field.getMapPlayerTwo().getMapForPlayer());
+
         Random random = new Random();
         switch (random.nextInt(2) + 1) {
             case 1 -> isNext = playerOne;
@@ -41,12 +44,14 @@ public class Game {
         player.setSpeed(step.isBoost(), step.isBrake());
         if (playerOne == player) {
             field.movePlayerOne(player, step.getDirection(), player.getSpeed());
+            player.setMap(field.getMapPlayerOne().getMapForPlayer());
         } else if (playerTwo == player) {
             field.movePlayerTwo(player, step.getDirection(), player.getSpeed());
+            player.setMap(field.getMapPlayerTwo().getMapForPlayer());
         }
     }
 
-    public Player whoIsNext() {
+    public Player nextPlayer() {
         if (playerOne == isNext) {
             isNext = playerTwo;
             return playerOne;
@@ -59,6 +64,10 @@ public class Game {
 
         System.out.println("Error in whoIsNext method in Game class");
         return null;
+    }
+
+    public Player whoIsNext() {
+        return isNext;
     }
 
     public Field getField() {

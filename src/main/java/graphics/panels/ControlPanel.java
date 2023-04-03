@@ -46,7 +46,7 @@ public class ControlPanel extends JPanel {
     }
 
     private void initialization() {
-        player = game.whoIsNext();
+        player = game.nextPlayer();
 
         topLeft = new JButton("top-left");
         topLeft.addActionListener(getActionListenerForDirection((byte) 1, topLeft));
@@ -82,7 +82,7 @@ public class ControlPanel extends JPanel {
             if (direction != 0) {
                 Step step = new Step(player, direction, isBoost, isBrake);
                 gameFrame.action(step);
-                player = game.whoIsNext();
+                player = game.nextPlayer();
                 setActiveButton(player.getDirection());
             } else {
                 System.out.println("нужно выбрать направление");

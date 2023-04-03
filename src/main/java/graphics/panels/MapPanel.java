@@ -1,5 +1,7 @@
 package graphics.panels;
 
+import engine.Game;
+import engine.Player;
 import engine.field.Cell;
 import engine.field.Field;
 import graphics.GameFrame;
@@ -11,10 +13,12 @@ import java.awt.geom.Rectangle2D;
 public class MapPanel extends JComponent {
 
     private final Field field;
+    private final Game game;
     private GameFrame gameFrame;
 
-    public MapPanel(Field field, GameFrame gameFrame) {
+    public MapPanel(Field field, Game game, GameFrame gameFrame) {
         this.field = field;
+        this.game = game;
         this.gameFrame = gameFrame;
     }
 
@@ -23,7 +27,10 @@ public class MapPanel extends JComponent {
         int size = 15;
         int half = 8;
         Graphics2D g2 = (Graphics2D)g;
-        Cell[][] map = field.getCells();
+
+        Player player = game.whoIsNext();
+        Cell[][] map = player.getMap();
+
         for (int i = 0; i < map.length; i++) {
             for (int y = 0; y < map[i].length; y++) {
                 Rectangle2D rectangle = new Rectangle2D.Double(y * size, i * size, size, size);

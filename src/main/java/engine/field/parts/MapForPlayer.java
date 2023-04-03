@@ -22,7 +22,7 @@ public class MapForPlayer {
     }
 
     public Cell[][] getMapForPlayer() {
-        if (allActivesCellsNextPart.contains(player.getPlayerCell())) {
+        if (indexNextPart != 10 && allActivesCellsNextPart.contains(player.getPlayerCell())) {
             setMapForPlayer(map[indexNextPart], map[indexNextPart + 1]);
             indexNextPart++;
         }

@@ -5,7 +5,6 @@ import engine.field.parts.MapForPlayer;
 import engine.field.parts.MapPart;
 
 public class Field {
-    private final Cell[][] cells;
     private MapForPlayer mapPlayerOne;
     private MapForPlayer mapPlayerTwo;
     private final MapPart[] map;
@@ -19,7 +18,7 @@ public class Field {
     private byte startDirection;
 
     private Field(Cell[][] cells, Cell cellStartPlayerOne, Cell cellStartPlayerTwo, Cell[] finishСells, byte startDirection) {
-        this.cells = cells;
+        //this.cells = cells;
         map = null;
         this.cellStartPlayerOne = cellStartPlayerOne;
         this.cellStartPlayerTwo = cellStartPlayerTwo;
@@ -33,7 +32,6 @@ public class Field {
         System.out.println("Идея в том, что на каждого игрока будет своя карта состоящая из двух частей, \n" +
                 "как только игрок переместился из первой части на вторую, так сразу первая отгружается и загружается третья и т.д.");
         System.out.println("Все вроде реализовано, кроме того, что надо ячейкам устанавливать координаты заново при сборке карты игрока");
-        cells = null;
         this.map = map;
         cellStartPlayerOne = map[0].getCellStartPlayerOne();
         cellStartPlayerTwo = map[0].getCellStartPlayerTwo();
@@ -59,7 +57,7 @@ public class Field {
             return true;
         }
 
-        Cell directionCell = getCellDirection(playerOne.getPlayerCell(), direction);
+        Cell directionCell = getCellDirection(playerOne.getPlayerCell(), mapPlayerOne, direction);
         if (!directionCell.isActive()) {//врезался
             player.setSpeedAfterCrash();
             player.setAllPossibleDirections((byte) 0);
@@ -80,7 +78,7 @@ public class Field {
             return true;
         }
 
-        Cell directionCell = getCellDirection(playerTwo.getPlayerCell(), direction);
+        Cell directionCell = getCellDirection(playerTwo.getPlayerCell(), mapPlayerTwo, direction);
         if (!directionCell.isActive()) {//врезался
             player.setSpeedAfterCrash();
             player.setAllPossibleDirections((byte) 0);
@@ -103,7 +101,7 @@ public class Field {
                                      6 7 8
      * @return ячейку направления
      */
-    private Cell getCellDirection(Cell cellStart, byte direction) {
+    private Cell getCellDirection(Cell cellStart, MapForPlayer mapPlayer, byte direction) {
         int x = cellStart.getX();
         int y = cellStart.getY();
 
@@ -138,7 +136,7 @@ public class Field {
             }
         }
 
-        return cells[y][x];
+        return mapPlayer.getMapForPlayer()[y][x];
     }
 
     public static Field getInstance() {
@@ -150,8 +148,8 @@ public class Field {
      * @return сгенерируемое случайное поле
      */
     private static Field getRandomField() {
-//        return new Field(MapGenerator.getField(10));
-        return getTestField();
+        return new Field(MapGenerator.getField(10));
+//        return getTestField();
     }
 
     private static Field getTestField() {
@@ -211,9 +209,6 @@ public class Field {
             {0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0}
     };
 
-    public Cell[][] getCells() {
-        return cells;
-    }
 
 
     public byte getStartDirection() {
@@ -232,5 +227,13 @@ public class Field {
 
         mapPlayerOne = new MapForPlayer(playerOne, map);
         mapPlayerTwo = new MapForPlayer(playerTwo, map);
+    }
+
+    public MapForPlayer getMapPlayerOne() {
+        return mapPlayerOne;
+    }
+
+    public MapForPlayer getMapPlayerTwo() {
+        return mapPlayerTwo;
     }
 }

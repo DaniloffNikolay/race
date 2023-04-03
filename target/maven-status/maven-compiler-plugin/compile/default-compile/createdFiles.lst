@@ -1,8 +1,6 @@
-engine\Field.class
 graphics\panels\NorthPanel.class
 graphics\StartFrame.class
 graphics\InstructionFrame.class
-engine\Cell.class
 graphics\GameFrame.class
 Main$1.class
 graphics\panels\ControlPanel.class

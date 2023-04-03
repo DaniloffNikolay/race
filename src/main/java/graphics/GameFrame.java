@@ -37,7 +37,7 @@ public class GameFrame extends JDialog {
         setLocation(screenSize.width / 2 - width / 2, screenSize.height / 2 - height / 2);
         setLayout(new BorderLayout());
 
-        mapPanel = new MapPanel(field, this);
+        mapPanel = new MapPanel(field, game, this);
         add(mapPanel, BorderLayout.CENTER);
 
         statusPanel = new JPanel();
