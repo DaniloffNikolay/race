@@ -9,6 +9,7 @@ public class Player {
     private byte speed = 1;
     private String name;
     private Direction direction;
+    private int countStep = 0;
 
     public Player(String name) {
         this.name = name;
@@ -176,6 +177,14 @@ public class Player {
 
     public void setPlayerCell(Cell playerCell) {
         this.playerCell = playerCell;
+    }
+
+    public int getCountStep() {
+        return countStep;
+    }
+
+    public int countIncrement() {
+        return countStep++;
     }
 
     @Override

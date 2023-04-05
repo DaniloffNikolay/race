@@ -14,6 +14,9 @@ public class Game {
     private long timeStart;
     private long totalTime;
 
+    private Player winner = null;
+    private boolean draw;
+
     public Game(Field field, Player playerOne, Player playerTwo) {
         this.field = field;
 
@@ -37,10 +40,34 @@ public class Game {
     private void endGame() {
         long timeEnd = System.currentTimeMillis();
         totalTime = timeEnd - timeStart;
+
+        int stepsPlayerOne = field.getPlayerOneFinishedInSteps();
+        int stepsPlayerTwo = field.getPlayerTwoFinishedInSteps();
+
+        if (stepsPlayerOne > stepsPlayerTwo)
+            winner = playerOne;
+        else if (stepsPlayerOne < stepsPlayerTwo)
+            winner = playerTwo;
+        else
+            draw = true;
+
+        //временный
+        System.out.println("Победил игрок: " + getWinner().toString());
+    }
+
+    public Player getWinner() {
+        if (draw)
+            return new Player("drow");
+        else
+            return winner;
     }
 
     public void action(Step step) {
+        if (field.isFieldEnd()) {
+            endGame();
+        }
         Player player = step.getPlayer();
+        player.countIncrement();
 
         /*System.out.println("ходит игрок: " + player + ", cell x = " +
                 player.getPlayerCell().getX() + ", y = " + player.getPlayerCell().getY() +
@@ -77,5 +104,9 @@ public class Game {
 
     public Field getField() {
         return field;
+    }
+
+    public boolean isDraw() {
+        return draw;
     }
 }
