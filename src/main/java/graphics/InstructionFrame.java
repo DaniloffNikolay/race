@@ -2,6 +2,9 @@ package graphics;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class InstructionFrame extends JDialog {
 
@@ -37,6 +40,7 @@ public class InstructionFrame extends JDialog {
 
         panel.add(titleLabel);
         panel.add(textArea);
+
         add(panel);
 
     }

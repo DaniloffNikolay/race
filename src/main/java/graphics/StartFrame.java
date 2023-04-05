@@ -4,6 +4,9 @@ import engine.Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class StartFrame extends JFrame {
 
@@ -35,9 +38,20 @@ public class StartFrame extends JFrame {
 
         });
 
+        JButton button = new JButton("Ссылка на проект");
+        button.addActionListener(a -> {
+            try {
+                Desktop.getDesktop().browse(new URI("https://github.com/DaniloffNikolay/race/tree/main"));
+            } catch (IOException e) {
+                System.out.println("Ошибка IOException");
+            } catch (URISyntaxException e) {
+                System.out.println("Ошибка URISyntaxException");
+            }
+        });
+
         centerPanel.add(newGame);
         centerPanel.add(instruction);
+        centerPanel.add(button);
         add(centerPanel, BorderLayout.CENTER);
     }
-
 }
