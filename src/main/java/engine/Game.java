@@ -52,7 +52,7 @@ public class Game {
             draw = true;
 
         //временный
-        System.out.println("Победил игрок: " + getWinner().toString());
+        System.out.println("Победил игрок: " + getWinner().toString() + ", за " + totalTime/1000 + "секунд");
     }
 
     public Player getWinner() {

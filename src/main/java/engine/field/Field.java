@@ -17,8 +17,8 @@ public class Field {
     private final Cell[] finishСells;
     private byte startDirection;
 
-    private int playerOneFinishedInSteps;
-    private int playerTwoFinishedInSteps;
+    private int playerOneFinishedInSteps = 0;
+    private int playerTwoFinishedInSteps = 0;
 
 
     private Field(MapPart[] map) {
@@ -44,6 +44,9 @@ public class Field {
 
     public boolean movePlayerOne(Player player, byte direction, byte speed) {
         if (checkFinish(player.getPlayerCell())) {
+            if (playerOneFinishedInSteps == 0) {
+                playerOneFinishedInSteps = player.getCountStep();
+            }
             return false;
         }
 
@@ -72,6 +75,9 @@ public class Field {
 //                player.getPlayerCell().getX() + ", y = " + player.getPlayerCell().getY() +
 //                ", direction = " + direction + ", speed = " + speed);
         if (checkFinish(player.getPlayerCell())) {
+            if (playerTwoFinishedInSteps == 0) {
+                playerTwoFinishedInSteps = player.getCountStep();
+            }
             return false;
         }
 

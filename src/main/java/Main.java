@@ -19,7 +19,7 @@ public class Main {
         });
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Main main = new Main();
         Player playerOne = new Player("Player one");
         Player playerTwo = new Player("Player two");
