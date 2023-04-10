@@ -5,6 +5,7 @@ import graphics.StartFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class Main {
 
@@ -20,10 +21,18 @@ public class Main {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        Main main = new Main();
+
+        Random random = new Random();
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println(random.nextInt(2));
+        }
+
+
+        /*Main main = new Main();
         Player playerOne = new Player("Player one");
         Player playerTwo = new Player("Player two");
         Game game = new Game(Field.getInstance(), playerOne, playerTwo);
-        main.startApplication(game);
+        main.startApplication(game);*/
     }
 }
