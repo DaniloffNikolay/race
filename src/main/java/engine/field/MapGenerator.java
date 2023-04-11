@@ -2,6 +2,9 @@ package engine.field;
 
 import engine.field.parts.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class MapGenerator {
@@ -232,7 +235,6 @@ public class MapGenerator {
             boolean left = false;
             boolean right = false;
 
-
             if (x == 0) { //находимя слева
                 if (y == 0) { //находимя в углу слева сверху
                     down = checkPart(0, 1);
@@ -267,11 +269,32 @@ public class MapGenerator {
         }
 
         private void fillExitDirectionWhichCannotBeUsed(boolean top, boolean down, boolean left, boolean right) {
-            if (top || down || left || right) {
+            List<Byte> list = new ArrayList<>();
 
+            if (top) list.add((byte) 1);
+            if (down) list.add((byte) 2);
+            if (left) list.add((byte) 3);
+            if (right) list.add((byte) 4);
+
+            if (list.size() > 0) {
+                exitDirectionWhichCannotBeUsed = new byte[list.size()];
+                for (int i = 0; i < list.size(); i++) {
+                    exitDirectionWhichCannotBeUsed[i] = list.get(i);
+                }
             } else {
-                exitDirectionWhichCannotBeUsed = new byte[0];
+                exitDirectionWhichCannotBeUsed = null;
             }
+        }
+
+        private byte HowManyTrue(boolean top, boolean down, boolean left, boolean right) {
+            byte count = 0;
+
+            if (top) count++;
+            if (down) count++;
+            if (left) count++;
+            if (right) count++;
+
+            return count;
         }
 
         /**
