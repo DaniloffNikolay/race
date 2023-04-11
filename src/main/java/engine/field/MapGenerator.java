@@ -51,6 +51,7 @@ public class MapGenerator {
         private int coordinateXLastPart;
         private int coordinateYLastPart;
         private byte directionExitLastPart;
+        private byte[] exitDirectionWhichCannotBeUsed;
 
         private BorderMap(int size) {
             random = new Random();
@@ -69,12 +70,10 @@ public class MapGenerator {
                     isAdd = addPart(getFinishPart(random, directionExitLastPart));
                     if (isAdd)
                         break;
+                } else {
+                    addPart(getOftenPart(random, directionExitLastPart));
                 }
-
-
-
             }
-
         }
 
         /**
@@ -93,6 +92,58 @@ public class MapGenerator {
                     coordinateYLastPart = y;
                     directionExitLastPart = directionExit;
                     return true;
+                }
+            } else if (part.isFinalPart()) {
+                byte directionExit = part.getDirectionExit();
+                switch (directionExit) {
+                    case 1:
+                        if (part.getDirectionEnter() != Util.getDirectionEnter(directionExitLastPart))
+                            break;
+                        if (checkBorderOnExit(coordinateXLastPart, coordinateYLastPart - 1, directionExit)) {
+                            if (checkPart(coordinateXLastPart, coordinateYLastPart - 1)) {
+                                allMap[coordinateYLastPart - 1][coordinateXLastPart] = part;
+                                coordinateYLastPart = coordinateYLastPart - 1;
+                                directionExitLastPart = directionExit;
+                                return true;
+                            }
+                        }
+                        break;
+                    case 2:
+                        if (part.getDirectionEnter() != Util.getDirectionEnter(directionExitLastPart))
+                            break;
+                        if (checkBorderOnExit(coordinateXLastPart, coordinateYLastPart + 1, directionExit)) {
+                            if (checkPart(coordinateXLastPart, coordinateYLastPart + 1)) {
+                                allMap[coordinateYLastPart + 1][coordinateXLastPart] = part;
+                                coordinateYLastPart = coordinateYLastPart + 1;
+                                directionExitLastPart = directionExit;
+                                return true;
+                            }
+                        }
+                        break;
+                    case 3:
+                        if (part.getDirectionEnter() != Util.getDirectionEnter(directionExitLastPart))
+                            break;
+                        if (checkBorderOnExit(coordinateXLastPart - 1, coordinateYLastPart, directionExit)) {
+                            if (checkPart(coordinateXLastPart - 1, coordinateYLastPart)) {
+                                allMap[coordinateYLastPart][coordinateXLastPart - 1] = part;
+                                coordinateXLastPart = coordinateXLastPart - 1;
+                                directionExitLastPart = directionExit;
+                                return true;
+                            }
+                        }
+                        break;
+                    case 4:
+                        if (part.getDirectionEnter() != Util.getDirectionEnter(directionExitLastPart))
+                            break;
+                        if (checkBorderOnExit(coordinateXLastPart + 1, coordinateYLastPart, directionExit)) {
+                            if (checkPart(coordinateXLastPart + 1, coordinateYLastPart)) {
+                                allMap[coordinateYLastPart][coordinateXLastPart + 1] = part;
+                                coordinateXLastPart = coordinateXLastPart + 1;
+                                directionExitLastPart = directionExit;
+                                return true;
+                            }
+                        }
+                        break;
                 }
             } else {
                 byte directionExit = part.getDirectionExit();
@@ -116,6 +167,13 @@ public class MapGenerator {
             if (part.getDirectionEnter() != Util.getDirectionEnter(directionExitLastPart))
                 return false;
 
+            if (exitDirectionWhichCannotBeUsed != null) {
+                for (byte b : exitDirectionWhichCannotBeUsed) {
+                    if (b == directionExit)
+                        return false;
+                }
+            }
+
             if (checkBorderOnExit(x, y, directionExit)) {
                 if (checkPart(x, y)) {
                     allMap[y][x] = part;
@@ -125,16 +183,95 @@ public class MapGenerator {
                     return true;
                 }
             }
+
             return false;
         }
-
 
         /**
          * Метод проверяет будет ли даная часть последней
          * @return
          */
         private boolean checkIsNextPartLast() {
+            fillExitDirectionWhichCannotBeUsed();
+            if (exitDirectionWhichCannotBeUsed != null) {
+                if (exitDirectionWhichCannotBeUsed.length > 3)
+                    return true;
+            }
             return false;
+        }
+
+        private void fillExitDirectionWhichCannotBeUsed() {
+            switch (directionExitLastPart) {
+                case 1:
+                    fillExitDirectionWhichCannotBeUsed(coordinateXLastPart, coordinateYLastPart - 1);
+                    break;
+                case 2:
+                    fillExitDirectionWhichCannotBeUsed(coordinateXLastPart, coordinateYLastPart + 1);
+                    break;
+                case 3:
+                    fillExitDirectionWhichCannotBeUsed(coordinateXLastPart - 1, coordinateYLastPart);
+                    break;
+                case 4:
+                    fillExitDirectionWhichCannotBeUsed(coordinateXLastPart + 1, coordinateYLastPart);
+                    break;
+            }
+        }
+
+        /**
+         * Получает координаты ячейки и проверяет все запрещенные направления
+         *          *                              top 1
+         *          *                              down 2
+         *          *                              left 3
+         *          *                              right 4
+         * @param x
+         * @param y
+         */
+        private void fillExitDirectionWhichCannotBeUsed(int x, int y) {
+            boolean top = false;
+            boolean down = false;
+            boolean left = false;
+            boolean right = false;
+
+
+            if (x == 0) { //находимя слева
+                if (y == 0) { //находимя в углу слева сверху
+                    down = checkPart(0, 1);
+                    left = checkPart(1, 0);
+                } else if (y == allMap.length - 1) { //находимя в углу слева снизу
+
+                } else { //находимя слева без углов
+
+                }
+            } else if (x == allMap[0].length - 1) { //находимя справа
+                if (y == 0) { //находимя в углу справа сверху
+
+                } else if (y == allMap.length - 1) { //находимя в углу справа снизу
+
+                } else { //находимя справа без углов
+
+                }
+            } else {
+                if (y == 0) { //находимя на верху без углов
+
+                } else if (y == allMap.length - 1) { //находимя внизу без углов
+
+                } else { //НАХОДИТЬСЯ НЕ НА ГРАНИЦЕ
+                    top = checkPart(x, y - 1);
+                    down = checkPart(x, y + 1);
+                    left = checkPart(x - 1, y );
+                    right = checkPart(x + 1, y);
+                }
+            }
+
+            fillExitDirectionWhichCannotBeUsed(top, down, left, right);
+        }
+
+        private void fillExitDirectionWhichCannotBeUsed(boolean top, boolean down, boolean left, boolean right) {
+            if (top || down || left || right) {
+
+            } else {
+                exitDirectionWhichCannotBeUsed = new byte[0];
+            }
         }
 
         /**

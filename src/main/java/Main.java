@@ -1,6 +1,8 @@
 import engine.Player;
+import engine.field.Cell;
 import engine.field.Field;
 import engine.Game;
+import engine.field.MapGenerator;
 import graphics.StartFrame;
 
 import javax.swing.*;
@@ -20,19 +22,31 @@ public class Main {
         });
     }
 
-    public static void main(String[] args) throws InterruptedException {
-
-        Random random = new Random();
-
-        for (int i = 0; i < 10; i++) {
-            System.out.println(random.nextInt(2));
-        }
-
-
-        /*Main main = new Main();
+    public static void fullTest() {
+        Main main = new Main();
         Player playerOne = new Player("Player one");
         Player playerTwo = new Player("Player two");
         Game game = new Game(Field.getInstance(), playerOne, playerTwo);
-        main.startApplication(game);*/
+        main.startApplication(game);
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        //fullTest();
+        mapGeneratorTest();
+    }
+
+    public static void mapGeneratorTest() {
+        Cell[][] map = MapGenerator.getFullField(10);
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < map[0].length; i++) {
+            for (int j = 0; j < map.length; j++) {
+                stringBuilder.append(" " + map[j][i]);
+            }
+            stringBuilder.append("\n");
+        }
+
+        System.out.println(stringBuilder);
     }
 }

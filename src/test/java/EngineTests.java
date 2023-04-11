@@ -1,3 +1,4 @@
+import engine.field.Cell;
 import engine.field.MapGenerator;
 import engine.field.parts.MapPart;
 import engine.field.parts.Util;
@@ -20,7 +21,5 @@ public class EngineTests {
             assertEquals(part.getDirectionEnter(), Util.getDirectionEnter(directionExit));
             directionExit = part.getDirectionExit();
         }
-
     }
-
 }
