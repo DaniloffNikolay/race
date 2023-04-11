@@ -74,8 +74,15 @@ public class MapGenerator {
                     if (isAdd)
                         break;
                 } else {
-                    addPart(getOftenPart(random, directionExitLastPart));
+                    //System.out.println("не последний!");
+                    MapPart pert = getOftenPart(random, directionExitLastPart);
+                    isAdd = addPart(pert);
                 }
+                System.out.println();
+                System.out.println();
+                System.out.println(this);
+                System.out.println();
+                System.out.println();
             }
         }
 
@@ -97,60 +104,18 @@ public class MapGenerator {
                     return true;
                 }
             } else if (part.isFinalPart()) {
-                byte directionExit = part.getDirectionExit();
-                switch (directionExit) {
+                switch (directionExitLastPart) {
                     case 1:
-                        if (part.getDirectionEnter() != Util.getDirectionEnter(directionExitLastPart))
-                            break;
-                        if (checkBorderOnExit(coordinateXLastPart, coordinateYLastPart - 1, directionExit)) {
-                            if (checkPart(coordinateXLastPart, coordinateYLastPart - 1)) {
-                                allMap[coordinateYLastPart - 1][coordinateXLastPart] = part;
-                                coordinateYLastPart = coordinateYLastPart - 1;
-                                directionExitLastPart = directionExit;
-                                return true;
-                            }
-                        }
-                        break;
+                        return addFinishPart(coordinateXLastPart, coordinateYLastPart - 1, part);
                     case 2:
-                        if (part.getDirectionEnter() != Util.getDirectionEnter(directionExitLastPart))
-                            break;
-                        if (checkBorderOnExit(coordinateXLastPart, coordinateYLastPart + 1, directionExit)) {
-                            if (checkPart(coordinateXLastPart, coordinateYLastPart + 1)) {
-                                allMap[coordinateYLastPart + 1][coordinateXLastPart] = part;
-                                coordinateYLastPart = coordinateYLastPart + 1;
-                                directionExitLastPart = directionExit;
-                                return true;
-                            }
-                        }
-                        break;
+                        return addFinishPart(coordinateXLastPart, coordinateYLastPart + 1, part);
                     case 3:
-                        if (part.getDirectionEnter() != Util.getDirectionEnter(directionExitLastPart))
-                            break;
-                        if (checkBorderOnExit(coordinateXLastPart - 1, coordinateYLastPart, directionExit)) {
-                            if (checkPart(coordinateXLastPart - 1, coordinateYLastPart)) {
-                                allMap[coordinateYLastPart][coordinateXLastPart - 1] = part;
-                                coordinateXLastPart = coordinateXLastPart - 1;
-                                directionExitLastPart = directionExit;
-                                return true;
-                            }
-                        }
-                        break;
+                        return addFinishPart(coordinateXLastPart - 1, coordinateYLastPart, part);
                     case 4:
-                        if (part.getDirectionEnter() != Util.getDirectionEnter(directionExitLastPart))
-                            break;
-                        if (checkBorderOnExit(coordinateXLastPart + 1, coordinateYLastPart, directionExit)) {
-                            if (checkPart(coordinateXLastPart + 1, coordinateYLastPart)) {
-                                allMap[coordinateYLastPart][coordinateXLastPart + 1] = part;
-                                coordinateXLastPart = coordinateXLastPart + 1;
-                                directionExitLastPart = directionExit;
-                                return true;
-                            }
-                        }
-                        break;
+                        return addFinishPart(coordinateXLastPart + 1, coordinateYLastPart, part);
                 }
             } else {
-                byte directionExit = part.getDirectionExit();
-                switch (directionExit) {
+                switch (directionExitLastPart) {
                     case 1:
                         return addPart(coordinateXLastPart, coordinateYLastPart - 1, part);
                     case 2:
@@ -165,17 +130,10 @@ public class MapGenerator {
             return false;
         }
 
-        private boolean addPart(int x, int y, MapPart part) {
+        private boolean addFinishPart(int x, int y, MapPart part) {
             byte directionExit = part.getDirectionExit();
             if (part.getDirectionEnter() != Util.getDirectionEnter(directionExitLastPart))
                 return false;
-
-            if (exitDirectionWhichCannotBeUsed != null) {
-                for (byte b : exitDirectionWhichCannotBeUsed) {
-                    if (b == directionExit)
-                        return false;
-                }
-            }
 
             if (checkBorderOnExit(x, y, directionExit)) {
                 if (checkPart(x, y)) {
@@ -183,6 +141,42 @@ public class MapGenerator {
                     coordinateXLastPart = x;
                     coordinateYLastPart = y;
                     directionExitLastPart = directionExit;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private boolean addPart(int x, int y, MapPart part) {
+            byte directionExit = part.getDirectionExit();
+            //
+            System.out.println();
+            System.out.println("x = " + x + ", y = " + y + ", direction enter = " + part.getDirectionEnter() + ", directionExit = " + directionExit + ", last direction exit = " + directionExitLastPart);
+            printExitDirectionWhichCannotBeUsed();
+
+            if (part.getDirectionEnter() != Util.getDirectionEnter(directionExitLastPart)) {
+                return false;
+            }
+            System.out.println("Прошли проверку входа и выхода");
+
+            if (exitDirectionWhichCannotBeUsed != null) {
+                for (byte b : exitDirectionWhichCannotBeUsed) {
+                    if (b == directionExit)
+                        return false;
+                }
+            }
+            System.out.println("Прошли проверку границ и выхода");
+
+            if (checkBorderOnExit(x, y, directionExit)) {
+                System.out.println("Прошли проверку границ");
+                if (checkPart(x, y)) {
+                    allMap[y][x] = part;
+                    coordinateXLastPart = x;
+                    coordinateYLastPart = y;
+                    directionExitLastPart = directionExit;
+                    System.out.println("added");
+                    System.out.println("x = " + x + ", y = " + y + ", direction enter = " + part.getDirectionEnter() + ", last direction = " + directionExitLastPart);
                     return true;
                 }
             }
@@ -222,10 +216,6 @@ public class MapGenerator {
 
         /**
          * Получает координаты ячейки и проверяет все запрещенные направления
-         *          *                              top 1
-         *          *                              down 2
-         *          *                              left 3
-         *          *                              right 4
          * @param x
          * @param y
          */
@@ -237,26 +227,37 @@ public class MapGenerator {
 
             if (x == 0) { //находимя слева
                 if (y == 0) { //находимя в углу слева сверху
-                    down = checkPart(0, 1);
-                    left = checkPart(1, 0);
+                    down = checkPart(x, y + 1);
+                    right = checkPart(x + 1, y);
                 } else if (y == allMap.length - 1) { //находимя в углу слева снизу
-
+                    top = checkPart(x, y - 1);
+                    right = checkPart(x + 1, y);
                 } else { //находимя слева без углов
-
+                    top = checkPart(x, y - 1);
+                    down = checkPart(x, y + 1);
+                    right = checkPart(x + 1, y);
                 }
             } else if (x == allMap[0].length - 1) { //находимя справа
                 if (y == 0) { //находимя в углу справа сверху
-
+                    down = checkPart(x, y + 1);
+                    left = checkPart(x - 1, y);
                 } else if (y == allMap.length - 1) { //находимя в углу справа снизу
-
+                    top = checkPart(x, y - 1);
+                    left = checkPart(x - 1, y);
                 } else { //находимя справа без углов
-
+                    top = checkPart(x, y - 1);
+                    down = checkPart(x, y + 1);
+                    left = checkPart(x - 1, y);
                 }
             } else {
                 if (y == 0) { //находимя на верху без углов
-
+                    down = checkPart(x, y + 1);
+                    left = checkPart(x - 1, y);
+                    right = checkPart(x + 1, y);
                 } else if (y == allMap.length - 1) { //находимя внизу без углов
-
+                    top = checkPart(x, y - 1);
+                    left = checkPart(x - 1, y);
+                    right = checkPart(x + 1, y);
                 } else { //НАХОДИТЬСЯ НЕ НА ГРАНИЦЕ
                     top = checkPart(x, y - 1);
                     down = checkPart(x, y + 1);
@@ -265,36 +266,35 @@ public class MapGenerator {
                 }
             }
 
+            System.out.println("top = " + top + ", down = " + down + ", left = " + left + ", right = " + right);
+
             fillExitDirectionWhichCannotBeUsed(top, down, left, right);
         }
 
         private void fillExitDirectionWhichCannotBeUsed(boolean top, boolean down, boolean left, boolean right) {
             List<Byte> list = new ArrayList<>();
 
-            if (top) list.add((byte) 1);
-            if (down) list.add((byte) 2);
-            if (left) list.add((byte) 3);
-            if (right) list.add((byte) 4);
+            if (!top) list.add((byte) 1);
+            if (!down) list.add((byte) 2);
+            if (!left) list.add((byte) 3);
+            if (!right) list.add((byte) 4);
 
             if (list.size() > 0) {
                 exitDirectionWhichCannotBeUsed = new byte[list.size()];
                 for (int i = 0; i < list.size(); i++) {
                     exitDirectionWhichCannotBeUsed[i] = list.get(i);
                 }
+
+
+                /*System.out.print("exitDirectionWhichCannotBeUsed = ");
+                for (byte b : exitDirectionWhichCannotBeUsed)
+                    System.out.print(b + ", ");
+                System.out.println();*/
+
+
             } else {
                 exitDirectionWhichCannotBeUsed = null;
             }
-        }
-
-        private byte HowManyTrue(boolean top, boolean down, boolean left, boolean right) {
-            byte count = 0;
-
-            if (top) count++;
-            if (down) count++;
-            if (left) count++;
-            if (right) count++;
-
-            return count;
         }
 
         /**
@@ -304,6 +304,10 @@ public class MapGenerator {
          * @return true если свободен
          */
         private boolean checkPart(int x, int y) {
+            if (y >= allMap.length || y < 0)
+                return false;
+            if (x >= allMap[y].length || x < 0)
+                return false;
             return allMap[y][x] == null;
         }
 
@@ -467,6 +471,35 @@ public class MapGenerator {
             }
 
             return fullMap;
+        }
+
+        private void printExitDirectionWhichCannotBeUsed() {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("ExitDirectionWhichCannotBeUsed = ");
+            if (exitDirectionWhichCannotBeUsed != null) {
+                for (byte b : exitDirectionWhichCannotBeUsed) {
+                    stringBuilder.append(b + " ");
+                }
+            }
+            System.out.println(stringBuilder);
+        }
+
+        @Override
+        public String toString() {
+            Cell[][] cells = buildFullField();
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (int i = 0; i < cells[0].length; i++) {
+                for (int j = 0; j < cells.length; j++) {
+                    if (cells[j][i].isActive())
+                        stringBuilder.append(" 1");
+                    else
+                        stringBuilder.append(" 0");
+                }
+                stringBuilder.append("\n");
+            }
+
+            return stringBuilder.toString();
         }
     }
 }
