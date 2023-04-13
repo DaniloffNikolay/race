@@ -14,9 +14,9 @@ public class MapForPlayer {
     private Cell[][] mapForPlayer;
     //private final MapPart[] map;
     private final Cell[][] fullMap;
-    private byte indexNextPart = 1;
+    //private byte indexNextPart = 1;
 
-    private Set<Cell> allActivesCellsNextPart;
+    //private Set<Cell> allActivesCellsNextPart;
 
     /*public MapForPlayer(Player player, MapPart[] map) {
         this.player = player;
@@ -34,7 +34,6 @@ public class MapForPlayer {
 
     private void reloadMapForPlayer() {
         Cell playerCell = player.getPlayerCell();
-
         mapForPlayer = calculateMapBorders(playerCell.getX(), playerCell.getY());
     }
 
@@ -56,8 +55,8 @@ public class MapForPlayer {
             }
         } else {
             for (int i = y - MIDDLE, k = 0; i < y + MIDDLE - 1; i++, k++) {
-                for (int j = x - MIDDLE, l = 0; j < x + MIDDLE - 1; j++, l++) {
-                    playerMap[k][l] = fullMap[i - MIDDLE][j - MIDDLE];
+                    for (int j = x - MIDDLE, l = 0; j < x + MIDDLE - 1; j++, l++) {
+                        playerMap[k][l] = fullMap[i - MIDDLE][j - MIDDLE];
                 }
             }
         }
@@ -66,6 +65,7 @@ public class MapForPlayer {
     }
 
     public Cell[][] getMapForPlayer() {
+        reloadMapForPlayer();
         return mapForPlayer;
     }
 

@@ -40,5 +40,34 @@ public class Main {
         Player playerOne = new Player("Player one");
         Player playerTwo = new Player("Player two");
         Game game = new Game(Field.getInstance(), playerOne, playerTwo);
+
+        Cell[][] playerOneMap = playerOne.getMap();
+        Cell[][] playerTwoMap = playerTwo.getMap();
+
+
+        System.out.println("Map player one: ");
+        System.out.println(getMap(playerOneMap));
+
+        System.out.println();
+
+        System.out.println("Map player two: ");
+        System.out.println(getMap(playerTwoMap));
+    }
+
+    private static String getMap(Cell[][] playerMap) {
+        System.out.println();
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < playerMap[0].length; i++) {
+            for (int j = 0; j < playerMap.length; j++) {
+                if (playerMap[j][i].isActive())
+                    stringBuilder.append(" 1");
+                else
+                    stringBuilder.append(" 0");
+            }
+            stringBuilder.append("\n");
+        }
+
+        return stringBuilder.toString();
     }
 }
