@@ -16,10 +16,13 @@ public class MapPanel extends JComponent {
     private final Game game;
     private GameFrame gameFrame;
 
+    private boolean paintAllMap;
+
     public MapPanel(Field field, Game game, GameFrame gameFrame) {
         this.field = field;
         this.game = game;
         this.gameFrame = gameFrame;
+        paintAllMap = false;
     }
 
     @Override
@@ -34,7 +37,7 @@ public class MapPanel extends JComponent {
             } else {
                 g2.drawString("Победил: " + game.getWinner() + " за " + game.getWinner().getCountStep() + " шагов", 30, 30);
             }
-        } else if (gameFrame == null) {
+        } else if (paintAllMap) {
             int size = 15;
             int half = 8;
 
@@ -100,4 +103,12 @@ public class MapPanel extends JComponent {
         }
     }
 
+
+    public boolean isPaintAllMap() {
+        return paintAllMap;
+    }
+
+    public void setPaintAllMap(boolean paintAllMap) {
+        this.paintAllMap = paintAllMap;
+    }
 }

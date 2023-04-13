@@ -48,6 +48,7 @@ public class GameFrame extends JDialog {
         controlPanel = new ControlPanel(this, game);
 //        controlPanel.setBackground(Color.GREEN);
         add(controlPanel, BorderLayout.SOUTH);
+        mapPanel.setPaintAllMap(false);
     }
 
     public void action(Step step) {

@@ -27,6 +27,7 @@ public class MapFrame extends JDialog {
         setLayout(new BorderLayout());
 
         mapPanel = new MapPanel(game.getField(), game, null);
+        mapPanel.setPaintAllMap(true);
         add(mapPanel, BorderLayout.CENTER);
     }
 }

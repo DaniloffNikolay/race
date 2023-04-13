@@ -104,7 +104,7 @@ public class MapForPlayer {
             }
         }
 
-        return mapForPlayer[y][x];
+        return fullMap[y][x];
     }
 
     /*public Cell[][] getMapForPlayer() {
