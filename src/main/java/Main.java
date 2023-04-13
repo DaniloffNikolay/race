@@ -31,8 +31,8 @@ public class Main {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        //fullTest();
-        mapGeneratorTest();
+        fullTest();
+        //mapGeneratorTest();
     }
 
     public static void mapGeneratorTest() {

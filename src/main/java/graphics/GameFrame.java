@@ -22,7 +22,6 @@ public class GameFrame extends JDialog {
 
 
     public GameFrame(Game game) {
-
         this.game = game;
         field = game.getField();
 

@@ -23,12 +23,12 @@ public class StartFrame extends JFrame {
         setLayout(new BorderLayout());
 
         JPanel centerPanel = new JPanel();
-        JButton newGame = new JButton("пуск");
-        newGame.addActionListener(e -> {
+
+        JButton goGame = new JButton("пуск");
+        goGame.addActionListener(e -> {
             GameFrame gameFrame = new GameFrame(game);
             game.start();
             gameFrame.setVisible(true);
-
         });
 
         JButton instruction = new JButton("инструкция");
@@ -38,8 +38,8 @@ public class StartFrame extends JFrame {
 
         });
 
-        JButton button = new JButton("Ссылка на проект");
-        button.addActionListener(a -> {
+        JButton hrefButton = new JButton("Ссылка на проект");
+        hrefButton.addActionListener(a -> {
             try {
                 Desktop.getDesktop().browse(new URI("https://github.com/DaniloffNikolay/race/tree/main"));
             } catch (IOException e) {
@@ -49,9 +49,16 @@ public class StartFrame extends JFrame {
             }
         });
 
-        centerPanel.add(newGame);
+        JButton printAllMap = new JButton("Показать всю карту");
+        printAllMap.addActionListener(a -> {
+            MapFrame gameFrame = new MapFrame(game);
+            gameFrame.setVisible(true);
+        });
+
+        centerPanel.add(goGame);
         centerPanel.add(instruction);
-        centerPanel.add(button);
+        centerPanel.add(hrefButton);
+        centerPanel.add(printAllMap);
         add(centerPanel, BorderLayout.CENTER);
     }
 }

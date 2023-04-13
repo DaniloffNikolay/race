@@ -104,7 +104,7 @@ public class Field {
             }
         }
 
-        StringBuilder stringBuilder = new StringBuilder();
+        /*StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < fullMap[0].length; i++) {
             for (int j = 0; j < fullMap.length; j++) {
@@ -116,7 +116,7 @@ public class Field {
             stringBuilder.append("\n");
         }
 
-        System.out.println(stringBuilder.toString());
+        System.out.println(stringBuilder.toString());*/
     }
 
 
@@ -252,5 +252,9 @@ public class Field {
 
     public int getPlayerTwoFinishedInSteps() {
         return playerTwoFinishedInSteps;
+    }
+
+    public Cell[][] getFullMap() {
+        return fullMap;
     }
 }
