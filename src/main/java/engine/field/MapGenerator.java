@@ -69,20 +69,24 @@ public class MapGenerator {
             }
 
             while (true) {
+                /*try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }*/
                 if (checkIsNextPartLast()) {
+                    System.out.println("ПОСЛЕДНИЙ");
                     isAdd = addPart(getFinishPart(random, directionExitLastPart));
                     if (isAdd)
                         break;
                 } else {
-                    //System.out.println("не последний!");
+                    System.out.println("не последний!");
                     MapPart pert = getOftenPart(random, directionExitLastPart);
                     isAdd = addPart(pert);
                 }
+                /*
                 System.out.println();
-                System.out.println();
-                System.out.println(this);
-                System.out.println();
-                System.out.println();
+                System.out.println(this);*/
             }
         }
 
@@ -135,14 +139,12 @@ public class MapGenerator {
             if (part.getDirectionEnter() != Util.getDirectionEnter(directionExitLastPart))
                 return false;
 
-            if (checkBorderOnExit(x, y, directionExit)) {
-                if (checkPart(x, y)) {
-                    allMap[y][x] = part;
-                    coordinateXLastPart = x;
-                    coordinateYLastPart = y;
-                    directionExitLastPart = directionExit;
-                    return true;
-                }
+            if (checkPart(x, y)) {
+                allMap[y][x] = part;
+                coordinateXLastPart = x;
+                coordinateYLastPart = y;
+                directionExitLastPart = directionExit;
+                return true;
             }
 
             return false;
@@ -151,14 +153,14 @@ public class MapGenerator {
         private boolean addPart(int x, int y, MapPart part) {
             byte directionExit = part.getDirectionExit();
             //
-            System.out.println();
-            System.out.println("x = " + x + ", y = " + y + ", direction enter = " + part.getDirectionEnter() + ", directionExit = " + directionExit + ", last direction exit = " + directionExitLastPart);
+            //System.out.println();
+            //System.out.println("x = " + x + ", y = " + y + ", direction enter = " + part.getDirectionEnter() + ", directionExit = " + directionExit + ", last direction exit = " + directionExitLastPart);
             printExitDirectionWhichCannotBeUsed();
 
             if (part.getDirectionEnter() != Util.getDirectionEnter(directionExitLastPart)) {
                 return false;
             }
-            System.out.println("Прошли проверку входа и выхода");
+            //System.out.println("Прошли проверку входа и выхода");
 
             if (exitDirectionWhichCannotBeUsed != null) {
                 for (byte b : exitDirectionWhichCannotBeUsed) {
@@ -166,17 +168,17 @@ public class MapGenerator {
                         return false;
                 }
             }
-            System.out.println("Прошли проверку границ и выхода");
+            //System.out.println("Прошли проверку границ и выхода");
 
             if (checkBorderOnExit(x, y, directionExit)) {
-                System.out.println("Прошли проверку границ");
+                //System.out.println("Прошли проверку границ");
                 if (checkPart(x, y)) {
                     allMap[y][x] = part;
                     coordinateXLastPart = x;
                     coordinateYLastPart = y;
                     directionExitLastPart = directionExit;
-                    System.out.println("added");
-                    System.out.println("x = " + x + ", y = " + y + ", direction enter = " + part.getDirectionEnter() + ", last direction = " + directionExitLastPart);
+                    //System.out.println("added");
+                    //System.out.println("x = " + x + ", y = " + y + ", direction enter = " + part.getDirectionEnter() + ", last direction = " + directionExitLastPart);
                     return true;
                 }
             }
