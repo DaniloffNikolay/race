@@ -8,6 +8,7 @@ public class Field {
     private MapForPlayer mapPlayerOne;
     private MapForPlayer mapPlayerTwo;
     private final MapPart[] map;
+    private final Cell[][] fullMap;
     private final Cell cellStartPlayerOne;
     private final Cell cellStartPlayerTwo;
 
@@ -22,6 +23,7 @@ public class Field {
 
 
     private Field(MapPart[] map) {
+        fullMap = null;
         this.map = map;
         cellStartPlayerOne = map[0].getCellStartPlayerOne();
         cellStartPlayerTwo = map[0].getCellStartPlayerTwo();
@@ -39,6 +41,67 @@ public class Field {
             startDirection = 4;
         else
             startDirection = 0;
+    }
+
+    private Field(MapPart[][] allMap) {
+        map = null;
+
+        int constanta = 16;
+        fullMap = new Cell[allMap.length * constanta][allMap[0].length * constanta];
+
+        Cell tempCellStartPlayerOne = null;
+        Cell tempCellStartPlayerTwo = null;
+        Cell[] tempFinishСells = null;
+
+        for (int i = 0; i < allMap.length; i++) {
+            for (int j = 0; j < allMap[i].length; j++) {
+                if (allMap[i][j] != null) {
+                    if (allMap[i][j].isStartingPart()) {
+                        tempCellStartPlayerOne = allMap[i][j].getCellStartPlayerOne();
+                        tempCellStartPlayerTwo = allMap[i][j].getCellStartPlayerTwo();
+                    } else if (allMap[i][j].isFinalPart()) {
+                        tempFinishСells = allMap[i][j].getFinishСells();
+                    }
+
+                    Cell[][] partMap = allMap[i][j].getPart();
+                    for (int k = 0; k < partMap.length; k++) {
+                        for (int l = 0; l < partMap[k].length; l++) {
+                            fullMap[i * constanta + k][j * constanta + l] = partMap[k][l];
+                        }
+                    }
+                } else {
+                    for (int k = 0; k < 16; k++) {
+                        for (int l = 0; l < 16; l++) {
+                            fullMap[i * constanta + k][j * constanta + l] = new Cell(false);
+                        }
+                    }
+                }
+            }
+        }
+
+        cellStartPlayerOne = tempCellStartPlayerOne;
+        cellStartPlayerTwo = tempCellStartPlayerTwo;
+        finishСells = tempFinishСells;
+
+        for (int i = 0; i < fullMap.length; i++) {
+            for (int j = 0; j < fullMap[i].length; j++) {
+                fullMap[i][j].setXY(j, i);
+            }
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < fullMap[0].length; i++) {
+            for (int j = 0; j < fullMap.length; j++) {
+                if (fullMap[j][i].isActive())
+                    stringBuilder.append(" 1");
+                else
+                    stringBuilder.append(" 0");
+            }
+            stringBuilder.append("\n");
+        }
+
+        System.out.println(stringBuilder.toString());
     }
 
 
@@ -122,7 +185,8 @@ public class Field {
      * @return сгенерируемое случайное поле
      */
     private static Field getRandomField() {
-        return new Field(MapGenerator.getField(10));
+        return new Field(MapGenerator.getAllMapPart(10));
+//        return new Field(MapGenerator.getField(10));
 //        return getTestField();
     }
 
@@ -140,8 +204,8 @@ public class Field {
         playerOne.setPlayerCell(cellStartPlayerOne);
         playerTwo.setPlayerCell(cellStartPlayerTwo);
 
-        mapPlayerOne = new MapForPlayer(playerOne, map);
-        mapPlayerTwo = new MapForPlayer(playerTwo, map);
+        mapPlayerOne = new MapForPlayer(playerOne, fullMap);
+        mapPlayerTwo = new MapForPlayer(playerTwo, fullMap);
     }
 
     public MapForPlayer getMapPlayerOne() {

@@ -7,17 +7,66 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class MapForPlayer {
+    private static final int SIZE = 25;
+    private static final int MIDDLE = 13;
+
     private final Player player;
     private Cell[][] mapForPlayer;
-    private final MapPart[] map;
+    //private final MapPart[] map;
+    private final Cell[][] fullMap;
     private byte indexNextPart = 1;
 
     private Set<Cell> allActivesCellsNextPart;
 
-    public MapForPlayer(Player player, MapPart[] map) {
+    /*public MapForPlayer(Player player, MapPart[] map) {
         this.player = player;
+        this.fullMap = null;
         this.map = map;
         setMapForPlayer(map[indexNextPart - 1], map[indexNextPart]);
+    }*/
+
+    public MapForPlayer(Player player, Cell[][] fullMap) {
+        this.player = player;
+        this.fullMap = fullMap;
+
+        reloadMapForPlayer();
+    }
+
+    private void reloadMapForPlayer() {
+        Cell playerCell = player.getPlayerCell();
+
+        mapForPlayer = calculateMapBorders(playerCell.getX(), playerCell.getY());
+    }
+
+    private Cell[][] calculateMapBorders(int x, int y) {
+        Cell[][] playerMap = new Cell[SIZE][SIZE];
+
+        int sizeY = fullMap.length - 1;
+        int sizeX = fullMap[0].length - 1;
+
+        if (x < MIDDLE || y < MIDDLE || x > (sizeX - MIDDLE) || y > (sizeY - MIDDLE)) { // поля карты игрока выходят за границы карты
+            for (int i = y - MIDDLE, k = 0; i < y + MIDDLE - 1; i++, k++) {
+                for (int j = x - MIDDLE, l = 0; j < x + MIDDLE - 1; j++, l++) {
+                    if (i < 0 || j < 0 || i >= sizeY || j >= sizeX) {
+                        playerMap[k][l] = new Cell(false);
+                    } else {
+                        playerMap[k][l] = fullMap[i][j];
+                    }
+                }
+            }
+        } else {
+            for (int i = y - MIDDLE, k = 0; i < y + MIDDLE - 1; i++, k++) {
+                for (int j = x - MIDDLE, l = 0; j < x + MIDDLE - 1; j++, l++) {
+                    playerMap[k][l] = fullMap[i - MIDDLE][j - MIDDLE];
+                }
+            }
+        }
+
+        return playerMap;
+    }
+
+    public Cell[][] getMapForPlayer() {
+        return mapForPlayer;
     }
 
     public Cell getCellDirection(Cell cellStart, byte direction) {
@@ -58,7 +107,7 @@ public class MapForPlayer {
         return mapForPlayer[y][x];
     }
 
-    public Cell[][] getMapForPlayer() {
+    /*public Cell[][] getMapForPlayer() {
         if (indexNextPart > 8) {
             setMapForPlayer(map[indexNextPart - 1], map[indexNextPart]);
             return mapForPlayer;
@@ -71,9 +120,9 @@ public class MapForPlayer {
         }
 
         return mapForPlayer;
-    }
+    }*/
 
-    private void setMapForPlayer(MapPart firstPart, MapPart nextPart) {
+    /*private void setMapForPlayer(MapPart firstPart, MapPart nextPart) {
         Cell[][] cellsFirstPart = firstPart.getPart();
         Cell[][] cellsNextPart = nextPart.getPart();
         allActivesCellsNextPart = new HashSet<>();
@@ -164,5 +213,5 @@ public class MapForPlayer {
                 }
             }
         }
-    }
+    }*/
 }
