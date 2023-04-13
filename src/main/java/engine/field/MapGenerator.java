@@ -350,11 +350,11 @@ public class MapGenerator {
                 case 0 :
                 case 1:
                 case 2:
-                    return new MapPart[3][3];
+                    return new MapPart[4][4];
                 case 3:
-                    return new MapPart[2][5];
+                    return new MapPart[3][5];
                 case 4:
-                    return new MapPart[5][2];
+                    return new MapPart[5][3];
             }
             return null;
         }
@@ -363,7 +363,7 @@ public class MapGenerator {
             int i = random.nextInt(5);
             switch (i) {
                 case 0 :
-                    return new MapPart[4][4];
+                    return new MapPart[5][5];
                 case 1:
                     return new MapPart[3][6];
                 case 2:
@@ -380,7 +380,7 @@ public class MapGenerator {
             int i = random.nextInt(5);
             switch (i) {
                 case 0 :
-                    return new MapPart[5][5];
+                    return new MapPart[6][6];
                 case 1:
                     return new MapPart[4][7];
                 case 2:

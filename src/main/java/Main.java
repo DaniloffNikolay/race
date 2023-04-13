@@ -26,7 +26,7 @@ public class Main {
         Main main = new Main();
         Player playerOne = new Player("Player one");
         Player playerTwo = new Player("Player two");
-        Game game = new Game(Field.getInstance(), playerOne, playerTwo);
+        Game game = new Game(Field.getInstance(100), playerOne, playerTwo);
         main.startApplication(game);
     }
 
@@ -39,7 +39,7 @@ public class Main {
         Main main = new Main();
         Player playerOne = new Player("Player one");
         Player playerTwo = new Player("Player two");
-        Game game = new Game(Field.getInstance(), playerOne, playerTwo);
+        Game game = new Game(Field.getInstance(20), playerOne, playerTwo);
 
         Cell[][] playerOneMap = playerOne.getMap();
         Cell[][] playerTwoMap = playerTwo.getMap();

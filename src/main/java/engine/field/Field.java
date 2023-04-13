@@ -20,28 +20,6 @@ public class Field {
     private int playerOneFinishedInSteps = 0;
     private int playerTwoFinishedInSteps = 0;
 
-
-    /*private Field(MapPart[] map) {
-        fullMap = null;
-        this.map = map;
-        cellStartPlayerOne = map[0].getCellStartPlayerOne();
-        cellStartPlayerTwo = map[0].getCellStartPlayerTwo();
-        cellStartPlayerOne.setPlayerOneHere(true);
-        cellStartPlayerTwo.setPlayerTwoHere(true);
-        finishСells = map[map.length - 1].getFinishСells();
-
-        if (map[0].getDirectionEnter() == 1) //начало сверху
-            startDirection = 7;
-        else if (map[0].getDirectionEnter() == 2) //начало снизу
-            startDirection = 2;
-        else if (map[0].getDirectionEnter() == 3) //начало слева
-            startDirection = 5;
-        else if (map[0].getDirectionEnter() == 4) //начало справа
-            startDirection = 4;
-        else
-            startDirection = 0;
-    }*/
-
     private Field(MapPart[][] allMap) {
         int constanta = 16;
         fullMap = new Cell[allMap.length * constanta][allMap[0].length * constanta];
@@ -103,20 +81,6 @@ public class Field {
                 fullMap[i][j].setXY(j, i);
             }
         }
-
-        /*StringBuilder stringBuilder = new StringBuilder();
-
-        for (int i = 0; i < fullMap[0].length; i++) {
-            for (int j = 0; j < fullMap.length; j++) {
-                if (fullMap[j][i].isActive())
-                    stringBuilder.append(" 1");
-                else
-                    stringBuilder.append(" 0");
-            }
-            stringBuilder.append("\n");
-        }
-
-        System.out.println(stringBuilder.toString());*/
     }
 
 
@@ -191,16 +155,16 @@ public class Field {
         return mapPlayer.getCellDirection(cellStart, direction);
     }
 
-    public static Field getInstance() {
-        return getRandomField();
+    public static Field getInstance(int size) {
+        return getRandomField(size);
     }
 
     /**
      * генерирует случайное поле
      * @return сгенерируемое случайное поле
      */
-    private static Field getRandomField() {
-        return new Field(MapGenerator.getAllMapPart(10));
+    private static Field getRandomField(int size) {
+        return new Field(MapGenerator.getAllMapPart(size));
 //        return new Field(MapGenerator.getField(10));
 //        return getTestField();
     }
