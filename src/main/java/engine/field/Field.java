@@ -7,7 +7,6 @@ import engine.field.parts.MapPart;
 public class Field {
     private MapForPlayer mapPlayerOne;
     private MapForPlayer mapPlayerTwo;
-    private final MapPart[] map;
     private final Cell[][] fullMap;
     private final Cell cellStartPlayerOne;
     private final Cell cellStartPlayerTwo;
@@ -22,7 +21,7 @@ public class Field {
     private int playerTwoFinishedInSteps = 0;
 
 
-    private Field(MapPart[] map) {
+    /*private Field(MapPart[] map) {
         fullMap = null;
         this.map = map;
         cellStartPlayerOne = map[0].getCellStartPlayerOne();
@@ -41,11 +40,9 @@ public class Field {
             startDirection = 4;
         else
             startDirection = 0;
-    }
+    }*/
 
     private Field(MapPart[][] allMap) {
-        map = null;
-
         int constanta = 16;
         fullMap = new Cell[allMap.length * constanta][allMap[0].length * constanta];
 
@@ -55,15 +52,33 @@ public class Field {
 
         for (int i = 0; i < allMap.length; i++) {
             for (int j = 0; j < allMap[i].length; j++) {
-                if (allMap[i][j] != null) {
-                    if (allMap[i][j].isStartingPart()) {
-                        tempCellStartPlayerOne = allMap[i][j].getCellStartPlayerOne();
-                        tempCellStartPlayerTwo = allMap[i][j].getCellStartPlayerTwo();
-                    } else if (allMap[i][j].isFinalPart()) {
-                        tempFinishСells = allMap[i][j].getFinishСells();
+
+                MapPart part = allMap[i][j];
+
+                if (part != null) {
+                    if (part.isStartingPart()) {
+                        tempCellStartPlayerOne = part.getCellStartPlayerOne();
+                        tempCellStartPlayerTwo = part.getCellStartPlayerTwo();
+
+                        tempCellStartPlayerOne.setPlayerOneHere(true);
+                        tempCellStartPlayerTwo.setPlayerTwoHere(true);
+
+                        if (part.getDirectionEnter() == 1) //начало сверху
+                            startDirection = 7;
+                        else if (part.getDirectionEnter() == 2) //начало снизу
+                            startDirection = 2;
+                        else if (part.getDirectionEnter() == 3) //начало слева
+                            startDirection = 5;
+                        else if (part.getDirectionEnter() == 4) //начало справа
+                            startDirection = 4;
+                        else
+                            startDirection = 0;
+
+                    } else if (part.isFinalPart()) {
+                        tempFinishСells = part.getFinishСells();
                     }
 
-                    Cell[][] partMap = allMap[i][j].getPart();
+                    Cell[][] partMap = part.getPart();
                     for (int k = 0; k < partMap.length; k++) {
                         for (int l = 0; l < partMap[k].length; l++) {
                             fullMap[i * constanta + k][j * constanta + l] = partMap[k][l];
