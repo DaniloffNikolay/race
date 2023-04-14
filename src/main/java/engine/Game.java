@@ -69,10 +69,6 @@ public class Game {
         Player player = step.getPlayer();
         player.countIncrement();
 
-        /*System.out.println("ходит игрок: " + player + ", cell x = " +
-                player.getPlayerCell().getX() + ", y = " + player.getPlayerCell().getY() +
-                ", direction = " + step.getDirection());*/
-
         player.setSpeed(step.isBoost(), step.isBrake());
         if (playerOne == player) {
             player.setMap(field.getMapPlayerOne().getMapForPlayer());
@@ -84,6 +80,7 @@ public class Game {
     }
 
     public Player nextPlayer() {
+        System.out.println("был player = " + isNext + ", это написано в game method nextPlayer");
         if (playerOne == isNext) {
             isNext = playerTwo;
             return playerOne;
@@ -94,7 +91,6 @@ public class Game {
             return playerTwo;
         }
 
-        System.out.println("Error in whoIsNext method in Game class");
         return null;
     }
 
@@ -108,5 +104,13 @@ public class Game {
 
     public boolean isDraw() {
         return draw;
+    }
+
+    public Player getPlayerOne() {
+        return playerOne;
+    }
+
+    public Player getPlayerTwo() {
+        return playerTwo;
     }
 }

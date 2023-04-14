@@ -49,11 +49,26 @@ public class GameFrame extends JDialog {
 //        controlPanel.setBackground(Color.GREEN);
         add(controlPanel, BorderLayout.SOUTH);
         mapPanel.setPaintAllMap(false);
+
+        Thread timer = new Thread() {
+            @Override
+            public void run() {
+                while (game.getWinner() == null) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        System.out.println("error inside in Thread");
+                    }
+                    mapPanel.repaint();
+                }
+            }
+        };
+        timer.start();
     }
 
     public void action(Step step) {
         game.action(step);
-        mapPanel.repaint();
+        //mapPanel.repaint();
     }
 
     public void update() {

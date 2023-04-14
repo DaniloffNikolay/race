@@ -1,6 +1,8 @@
 package graphics;
 
 import engine.Game;
+import engine.Player;
+import engine.field.Field;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,10 +60,23 @@ public class StartFrame extends JFrame {
             gameFrame.setVisible(true);
         });
 
+        JButton reloadField = new JButton("получить карту");
+        printAllMap.addActionListener(a -> {
+            Field newField = game.getField();
+            Player playerOne = game.getPlayerOne();
+            Player playerTwo = game.getPlayerTwo();
+
+            Game newGame = new Game(newField, playerOne, playerTwo);
+
+            GameFrame gameFrame = new GameFrame(newGame);
+            gameFrame.setVisible(true);
+        });
+
         centerPanel.add(goGame);
         centerPanel.add(instruction);
         centerPanel.add(hrefButton);
         centerPanel.add(printAllMap);
+        centerPanel.add(reloadField);
         add(centerPanel, BorderLayout.CENTER);
     }
 }
