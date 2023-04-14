@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-public class MapPanel extends JComponent {
+public class MapPanel extends JPanel {
 
     private final Field field;
     private final Game game;
@@ -101,11 +101,6 @@ public class MapPanel extends JComponent {
                 }
             }
         }
-    }
-
-
-    public boolean isPaintAllMap() {
-        return paintAllMap;
     }
 
     public void setPaintAllMap(boolean paintAllMap) {

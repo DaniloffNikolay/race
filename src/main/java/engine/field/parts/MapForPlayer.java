@@ -43,22 +43,28 @@ public class MapForPlayer {
         int sizeY = fullMap.length - 1;
         int sizeX = fullMap[0].length - 1;
 
-        if (x < MIDDLE || y < MIDDLE || x > (sizeX - MIDDLE) || y > (sizeY - MIDDLE)) { // поля карты игрока выходят за границы карты
-            for (int i = y - MIDDLE, k = 0; i < y + MIDDLE - 1; i++, k++) {
-                for (int j = x - MIDDLE, l = 0; j < x + MIDDLE - 1; j++, l++) {
-                    if (i < 0 || j < 0 || i >= sizeY || j >= sizeX) {
-                        playerMap[k][l] = new Cell(false);
-                    } else {
-                        playerMap[k][l] = fullMap[i][j];
+        try {
+            if (x < MIDDLE || y < MIDDLE || x > (sizeX - MIDDLE) || y > (sizeY - MIDDLE)) { // поля карты игрока выходят за границы карты
+                for (int i = y - MIDDLE, k = 0; i < y + MIDDLE - 1; i++, k++) {
+                    for (int j = x - MIDDLE, l = 0; j < x + MIDDLE - 1; j++, l++) {
+                        if (i < 0 || j < 0 || i >= sizeY || j >= sizeX) {
+                            playerMap[k][l] = new Cell(false);
+                        } else {
+                            playerMap[k][l] = fullMap[i][j];
+                        }
+                    }
+                }
+            } else {
+                for (int i = y - MIDDLE, k = 0; i < y + MIDDLE - 1; i++, k++) {
+                    for (int j = x - MIDDLE, l = 0; j < x + MIDDLE - 1; j++, l++) {
+                        Cell cell = fullMap[i][j];
+                        playerMap[k][l] = cell;
                     }
                 }
             }
-        } else {
-            for (int i = y - MIDDLE, k = 0; i < y + MIDDLE - 1; i++, k++) {
-                    for (int j = x - MIDDLE, l = 0; j < x + MIDDLE - 1; j++, l++) {
-                        playerMap[k][l] = fullMap[i - MIDDLE][j - MIDDLE];
-                }
-            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("x = " + x + ". y = " + y + ", sizeX = " + sizeX + ", sizeY = " + sizeY);
+            throw e;
         }
 
         return playerMap;

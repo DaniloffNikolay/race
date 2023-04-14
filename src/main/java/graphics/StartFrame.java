@@ -10,15 +10,18 @@ import java.net.URISyntaxException;
 
 public class StartFrame extends JFrame {
 
-    public static final int DEFAULT_WIDTH = 601;
-    public static final int DEFAULT_HEIGHT = 761;
+    public static final int DEFAULT_WIDTH = 300;
+    public static final int DEFAULT_HEIGHT = 400;
 
     public StartFrame(Game game) {
-        setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+
+
+
         setResizable(false);
         Toolkit kit = Toolkit.getDefaultToolkit();
         final Dimension screenSize = kit.getScreenSize();
         setLocation(screenSize.width / 2 - DEFAULT_WIDTH / 2, screenSize.height / 2 - DEFAULT_HEIGHT / 2);
+        setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
         setLayout(new BorderLayout());
 
